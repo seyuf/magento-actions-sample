@@ -1,12 +1,15 @@
-name: 'Container Action Template'
-description: 'Get started with Container actions'
-author: 'GitHub'
+name: 'Magento 2 actions'
+description: 'test build deploy M2 projects'
+author: 'MAD IT'
 inputs: 
-  myInput:
-    description: 'Input to use'
-    default: 'world'
+  php:
+    description: 'version of php to use 7.1 or 7.2'
+    default: '7.1'
+  process:
+    description: 'process to apply to src can be build, static-test, integration-test, deploy'
+    default: 'build'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   args:
-    - ${{ inputs.myInput }}
+    - ${{ inputs }}
