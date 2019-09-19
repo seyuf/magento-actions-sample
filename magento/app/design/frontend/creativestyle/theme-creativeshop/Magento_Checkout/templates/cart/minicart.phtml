@@ -1,0 +1,55 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var $block \Magento\Checkout\Block\Cart\Sidebar */
+$label = $block->getXmlLabel();
+?>
+
+<li class="cs-header-user-nav__item <?= $block->getAdditionalCssClasses() ?>"> 
+    <div class="cs-addtocart__minicart minicart-wrapper" data-block="minicart">
+        <a class="cs-header-user-nav__link cs-addtocart__minicart-link action showcart" href="<?= /* @escapeNotVerified */ $block->getShoppingCartUrl() ?>" data-bind="scope: 'minicart_content'">
+            <div class="cs-header-user-nav__icon-wrapper">
+                <?= $block->getChildHtml('minicart.icon'); ?>
+                <span class="counter qty empty cs-header-user-nav__qty-counter <?= $block->getBadgeAdditionalCssClasses() ?>" data-bind="css: { 'cs-header-user-nav__qty-counter--have-items': getCartParam('summary_count') > 0, 'cs-header-user-nav__qty-counter--empty': !getCartParam('summary_count') }">
+                    <span class="cs-header-user-nav__qty-counter-span cs-addtocart__minicart-qty-text">
+                        <!-- ko text: getCartParam('summary_count') --><!-- /ko -->
+                    </span>
+                </span>
+            </div>
+            <?php if (!empty($label)): ?>
+                <span class="cs-header-user-nav__label"><?= /* @escapeNotVerified */ $block->escapeHtml($label) ?></span>
+            <?php endif; ?>
+        </a>
+    </div>
+    <?php if ($block->getIsNeedToDisplaySideBar()): ?>
+        <div class="block block-minicart empty"
+             data-role="dropdownDialog"
+             data-mage-init='{"dropdownDialog":{
+                "triggerEvent": "touchstart mouseenter",
+                "appendTo":"[data-block=minicart]",
+                "triggerTarget":".showcart",
+                "timeout": "2000",
+                "closeOnMouseLeave": false,
+                "closeOnEscape": true,
+                "triggerClass":"active",
+                "parentClass":"active",
+                "buttons":[]}}'>
+            <div id="minicart-content-wrapper" class="cs-minicart" data-bind="scope: 'minicart_content'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
+            </div>
+            <?= $block->getChildHtml('minicart.addons') ?>
+        </div>
+    <?php endif ?>
+    <script>
+        window.checkout = <?= /* @escapeNotVerified */ $block->getSerializedConfig() ?>;
+    </script>
+    <script type="text/x-magento-init">
+        {
+            "[data-block='minicart']": {
+                "Magento_Ui/js/core/app": <?= /* @escapeNotVerified */ $block->getJsLayout() ?>
+            },
+            "*": {
+                "Magento_Ui/js/block-loader": "<?= /* @escapeNotVerified */ $block->getViewFileUrl('images/loader-1.gif') ?>"
+            }
+        }
+    </script>
+</li>

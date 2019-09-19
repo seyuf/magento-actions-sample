@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="cookie_notices">
+            <block class="MageSuite\ThemeHelpers\Block\Icon" name="cookie_notices.block.icon">
+                <arguments>
+                    <argument name="icon_url" xsi:type="string">images/icons/cookie/cookie.svg</argument>
+                    <argument name="css_class" xsi:type="string">cs-cookie-message__icon</argument>
+                </arguments>
+            </block>
+            <block class="MageSuite\ThemeHelpers\Block\Icon" name="cookie_notices.button.icon">
+                <arguments>
+                    <argument name="icon_url" xsi:type="string">images/icons/button/icon-default-primary.svg</argument>
+                    <argument name="css_class" xsi:type="string">cs-cookie-message__button-icon</argument>
+                    <argument name="inlined" xsi:type="boolean">true</argument>
+                </arguments>
+            </block>
+
+            <arguments>
+                <!-- if no CMS block ID provided (value is empty, block doesn't exist or is disabled), fallback will be displayed (defined in template) -->
+                <argument name="notice_cms_block_id" xsi:type="string">cookie-layer-notice</argument>
+                <argument translate="true" name="allow_cookies_button_text" xsi:type="string">Allow Cookies</argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

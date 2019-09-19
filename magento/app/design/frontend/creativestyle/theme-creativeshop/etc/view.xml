@@ -1,0 +1,538 @@
+<?xml version="1.0"?>
+<view xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Config/etc/view.xsd">
+    <vars module="MageSuite_ContentConstructor">
+        <var name="columns">
+            <var name="default_layout">multiple-columns</var>
+            <var name="one-column">
+                <var name="phone">1</var>
+                <var name="phoneLg">2</var>
+                <var name="tablet">3</var>
+                <var name="laptop">4</var>
+                <var name="laptopLg">4</var>
+                <var name="desktop">4</var>
+                <var name="tv">4</var>
+            </var>
+            <var name="multiple-columns">
+                <var name="phone">1</var>
+                <var name="phoneLg">2</var>
+                <var name="tablet">2</var>
+                <var name="laptop">3</var>
+                <var name="laptopLg">3</var>
+                <var name="desktop">3</var>
+                <var name="tv">3</var>
+            </var>
+        </var>
+        <var name="sections">
+            <var name="cms_page_form.cms_page_form">
+                <var name="0">content</var>
+            </var>
+            <var name="cmsstaging_page_update_form.cmsstaging_page_update_form">
+                <var name="0">content</var>
+            </var>
+            <var name="product_form.product_form">
+                <var name="0">cc-content</var>
+            </var>
+            <var name="catalogstaging_update_form.catalogstaging_update_form">
+                <var name="0">cc-content</var>
+            </var>
+            <var name="catalogstaging_category_update_form.catalogstaging_category_update_form">
+                <var name="0">cc-top</var>
+                <var name="1">grid</var>
+                <var name="2">cc-bottom</var>
+            </var>
+            <var name="category_form.category_form">
+                <var name="0">cc-top</var>
+                <var name="1">grid</var>
+                <var name="2">cc-bottom</var>
+            </var>
+            <var name="brands_edit_form.brands_edit_form">
+                <var name="0">cc-top</var>
+                <var name="1">grid</var>
+                <var name="2">cc-bottom</var>
+            </var>
+            <var name="defaults">
+                <var name="cms_page_form.cms_page_form">content</var>
+                <var name="cmsstaging_page_update_form.cmsstaging_page_update_form">content</var>
+                <var name="product_form.product_form">cc-content</var>
+                <var name="catalogstaging_update_form.catalogstaging_update_for">cc-content</var>
+                <var name="category_form.category_form">grid</var>
+                <var name="catalogstaging_category_update_form.catalogstaging_category_update_form">grid</var>
+                <var name="brands_edit_form.brands_edit_form">grid</var>
+            </var>
+        </var>
+        <var name="special_components">
+            <var name="0">magento-product-grid-teasers</var>
+        </var>
+        <var name="filters">
+            <var name="component_visibility">
+                <var name="icon">#icon_eye</var>
+                <var name="title">Storefront visibility</var>
+                <var name="options">
+                    <var name="mobile">
+                        <var name="label">Mobile</var>
+                        <var name="value">true</var>
+                    </var>
+                    <var name="desktop">
+                        <var name="label">Desktop</var>
+                        <var name="value">true</var>
+                    </var>
+                    <var name="none">
+                        <var name="label">Not visible</var>
+                        <var name="value">true</var>
+                    </var>
+                </var>
+            </var>
+        </var>
+        <var name="image_teasers_content_positions">
+            <var name="0">Text vertically centered on the left</var>
+            <var name="1">Text on the bottom, left corner</var>
+            <var name="2">Text vertically centered in the middle</var>
+            <var name="3">Text on the bottom - centered</var>
+        </var>
+        <var name="teaser">
+            <var name="tabs">
+                <var name="0">
+                    <var name="label">content</var>
+                    <var name="content">#content</var>
+                </var>
+                <var name="1">
+                    <var name="label">style</var>
+                    <var name="content">#style</var>
+                </var>
+                <!-- see https://jira.pluswerk.ag/wiki/pages/viewpage.action?pageId=26083629 for adding custom fields -->
+            </var>
+            <var name="color_schemes">
+                <var name="0">dark</var>
+                <var name="1">light</var>
+            </var>
+            <var name="optimizers_intensity_steps">
+                <var name="overlay">10</var>
+                <var name="gradient">10</var>
+                <var name="container">10</var>
+                <var name="text_shadow">10</var>
+            </var>
+        </var>
+    </vars>
+
+    <vars module="MageSuite_ContentConstructorFrontend">
+        <var name="component_hidden_classes">
+            <var name="mobile">cs-display-controller--hidden-mobile</var>
+            <var name="desktop">cs-display-controller--hidden-desktop</var>
+        </var>
+        <var name="min_content_width">320</var>
+        <var name="max_content_width">1200</var>
+
+        <var name="brand_carousel">
+            <var name="additional_css_classes"></var>
+            <var name="lazyload_brand_images">true</var>
+            <var name="link_brands">true</var>
+            <var name="pagination">
+                <var name="show">true</var>
+                <var name="additional_css_classes"></var>
+            </var>
+            <var name="navigation">
+                <var name="show">true</var>
+                <var name="arrows">
+                    <var name="prev">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-left.svg</var>
+                    </var>
+                    <var name="next">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-right.svg</var>
+                    </var>
+                </var>
+            </var>
+        </var>
+        <var name="button">
+            <var name="additional_css_classes"></var>
+            <var name="icon_path">images/icons/arrow_next.svg</var>
+        </var>
+        <var name="category_links">
+            <var name="additional_css_classes"></var>
+            <var name="show_title">true</var>
+            <var name="hide_links_breakpoints">
+                <var name="tablet">
+                    <var name="additional_css_classes">cs-category-links__list-item--hide-tablet</var>
+                    <var name="hide_from">5</var>
+                </var>
+                <var name="laptop">
+                    <var name="additional_css_classes">cs-category-links__list-item--hide-laptop</var>
+                    <var name="hide_from">7</var>
+                </var>
+                <var name="laptopLg">
+                    <var name="additional_css_classes">cs-category-links__list-item--hide-laptopLg</var>
+                    <var name="hide_from">8</var>
+                </var>
+                <var name="desktop">
+                    <var name="additional_css_classes">cs-category-links__list-item--hide-desktop</var>
+                    <var name="hide_from">10</var>
+                </var>
+            </var>
+            <var name="all_products">
+                <var name="label">All Products</var>
+                <var name="icon">images/icons/icon_arrow-right.svg</var>
+            </var>
+        </var>
+        <var name="cms_teaser">
+            <var name="additional_css_classes"></var>
+            <var name="pagination">
+                <var name="show">true</var>
+                <var name="additional_css_classes"></var>
+            </var>
+            <var name="navigation">
+                <var name="show">true</var>
+                <var name="arrows">
+                    <var name="prev">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-left.svg</var>
+                    </var>
+                    <var name="next">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-right.svg</var>
+                    </var>
+                </var>
+            </var>
+            <var name="cta_button_icon_path">images/icons/arrow_next.svg</var>
+        </var>
+        <var name="daily_deal_teaser">
+            <var name="additional_css_classes"></var>
+            <var name="lazyload_image">true</var>
+            <var name="slogan">
+                <var name="show">true</var>
+                <var name="icon_path">images/icons/clock.svg</var>
+            </var>
+            <var name="show_brand">true</var>
+            <var name="show_rating">true</var>
+            <var name="show_available_amount_section">true</var>
+            <var name="addtocart_button">
+                <var name="show">true</var>
+                <var name="icon_path">images/icons/arrow_next.svg</var>
+            </var>
+            <var name="discount_badge">
+                <var name="show">true</var>
+                <var name="show_sale_label">false</var>
+                <var name="show_percentage">true</var>
+                <var name="prefix">-</var>
+                <var name="suffix">%</var>
+            </var>
+            <var name="expired_notice">
+                <var name="show">false</var>
+                <var name="content"></var>
+            </var>
+        </var>
+        <var name="headline">
+            <var name="additional_css_classes"></var>
+        </var>
+        <var name="hero_carousel">
+            <var name="additional_css_classes">cs-hero--centered</var>
+            <var name="cta_button_icon_path">images/icons/hero/arrow_next.svg</var>
+            <var name="sizes">(max-width: 48em) 100vw, (max-width: 1200px) 80vw, 960px</var>
+            <var name="navigation">
+                <var name="show">true</var>
+                <var name="arrows">
+                    <var name="prev">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-left.svg</var>
+                    </var>
+                    <var name="next">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-right.svg</var>
+                    </var>
+                </var>
+            </var>
+            <var name="pagination">
+                <var name="show">true</var>
+                <var name="additional_css_classes"></var>
+            </var>
+        </var>
+        <var name="image_teaser">
+            <var name="additional_css_classes"></var>
+            <var name="cta_button_icon_path">images/icons/arrow_next.svg</var>
+            <var name="navigation">
+                <var name="show">true</var>
+                <var name="arrows">
+                    <var name="prev">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-left.svg</var>
+                    </var>
+                    <var name="next">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-right.svg</var>
+                    </var>
+                </var>
+            </var>
+            <var name="pagination">
+                <var name="show">true</var>
+                <var name="additional_css_classes"></var>
+            </var>
+        </var>
+        <var name="paragraph">
+            <var name="additional_css_classes"></var>
+        </var>
+        <var name="product_carousel">
+            <var name="additional_css_classes"></var>
+            <var name="navigation">
+                <var name="show">true</var>
+                <var name="arrows">
+                    <var name="prev">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-left.svg</var>
+                    </var>
+                    <var name="next">
+                        <var name="additional_css_classes"></var>
+                        <var name="path">images/icons/icon_arrow-right.svg</var>
+                    </var>
+                </var>
+            </var>
+            <var name="pagination">
+                <var name="additional_css_classes"></var>
+                <var name="show">true</var>
+            </var>
+            <var name="scrollbar">
+                <var name="additional_css_classes"></var>
+                <var name="show">false</var>
+            </var>
+        </var>
+        <var name="product_finder">
+            <var name="additional_css_classes"></var>
+            <var name="button_icon_path">images/icons/arrow_prev.svg</var>
+        </var>
+        <var name="product_grid">
+            <var name="additional_css_classes"></var>
+            <var name="lazyload_heros_images">true</var>
+            <var name="cta_button_icon_path">images/icons/arrow_next.svg</var>
+        </var>
+        <var name="separator">
+            <var name="additional_css_classes"></var>
+            <var name="show_line">true</var>
+        </var>
+        <var name="static_block">
+            <var name="additional_css_classes"></var>
+        </var>
+    </vars>
+
+    <vars module="MageSuite_ThemeHelpers">
+        <var name="qty_increment">
+            <var name="template">MageSuite_ThemeHelpers::qty-increment.phtml</var>
+            <var name="icons">
+                <var name="decrement">images/icons/qty-increment/minus.svg</var>
+                <var name="increment">images/icons/qty-increment/plus.svg</var>
+            </var>
+        </var>
+    </vars>
+
+    <vars module="MageSuite_ProductTile">
+        <var name="product_image_lazyload_from">6</var>
+    </vars>
+
+    <vars module="MageSuite_DailyDeal">
+        <var name="countdown_labels">
+            <var name="day">Day</var>
+            <var name="days">Days</var>
+            <var name="hour">Hour</var>
+            <var name="hours">Hours</var>
+            <var name="minute">Min</var>
+            <var name="minutes">Min</var>
+            <var name="second">Sec</var>
+            <var name="seconds">Sec</var>
+        </var>
+    </vars>
+
+    <vars module="Magento_Theme">
+        <var name="toolbar">
+            <var name="pagination">
+                <!-- You can decide about pagination mode (text input / bullet points) in admin panel (Stores -> Configuration -> MAGESUITE -> Pagination). Define 'catalog_category_view' to use input mode or remove it to use bullet points on category pages. You can decide on this mode 'per page' by manipulating other handlers in this way. -->
+                <var name="display">true</var>
+                <var name="prefix_label">Page:</var>
+                <var name="display_prev_next_buttons_if_disabled">true</var>
+                <var name="display_prev_next_labels">false</var>
+                <!-- if last_page_separator will be left empty, it will display as '/'. The reason is that we don't want to put it as translateable string -->
+                <var name="last_page_separator"></var>
+                <var name="icons">
+                    <var name="previous_page">images/icons/toolbar/pagination-previous-page.svg</var>
+                    <var name="next_page">images/icons/toolbar/pagination-next-page.svg</var>
+                </var>
+            </var>
+        </var>
+        <var name="breadcrumbs">
+            <var name="custom_separator">
+                <!-- You can decide if customized separator, for eg. SVG icon should be used. -->
+                <var name="display">false</var>
+                <var name="icon">images/icons/icon_arrow-right.svg</var>
+            </var>
+        </var>
+    </vars>
+
+    <vars module="Magento_Catalog">
+        <!-- configures toolbar elements (except of pagination, which is in Magento_Theme vars as it's global component) -->
+        <var name="toolbar">
+            <var name="amount">
+                <var name="display">false</var>
+            </var>
+            <var name="sorter">
+                <var name="display">true</var>
+                <var name="label">Sort by:</var>
+                <var name="display_sort_direction_label">false</var>
+                <!-- Currently we use MageSuite_Sorting that changed logic of sorting dropdown and no icons are displayed at all. If you want them back you have to uninstall Sorting extention -->
+                <var name="icons">
+                    <var name="order_asc">images/icons/toolbar/asc-order-icon.svg</var>
+                    <var name="order_desc">images/icons/toolbar/desc-order-icon.svg</var>
+                </var>
+            </var>
+            <var name="limiter">
+                <var name="display">true</var>
+                <var name="prefix_label">Display:</var>
+                <var name="suffix_label"></var>
+                <var name="as_select">false</var>
+            </var>
+            <var name="viewmode_switcher">
+                <var name="display">true</var>
+                <var name="prefix_label"></var>
+                <var name="display_modes_icons">true</var>
+                <var name="display_modes_labels">false</var>
+            </var>
+        </var>
+
+        <!-- Defines if Adding to cart should be done with AJAX where it can -->
+        <var name="ajax_addtocart">
+            <var name="enabled">true</var>
+            <var name="css_classes">
+                <var name="default_button">cs-addtocart__button</var>
+                <var name="default_label">cs-addtocart__button-label</var>
+                <var name="processing_label"></var>
+                <var name="success_overlay">cs-addtocart__feedback-bg</var>
+                <var name="success_label">cs-addtocart__success-label</var>
+                <var name="fail_label">cs-addtocart__fail-label</var>
+            </var>
+            <var name="labels">
+                <var name="default">Add to Cart</var>
+                <var name="processing"></var>
+                <var name="success">Thank you!</var>
+                <var name="fail">Something went wrong</var>
+            </var>
+            <var name="icons">
+                <var name="default">
+                    <var name="path">images/icons/addtocart/icon-addtocart.svg</var>
+                    <var name="css_class">cs-addtocart__button-icon</var>
+                    <var name="inlined">true</var>
+                </var>
+                <var name="configure">
+                    <var name="path">images/icons/addtocart/icon-configure.svg</var>
+                    <var name="css_class">cs-addtocart__configure-icon</var>
+                    <var name="inlined">true</var>
+                    <var name="lazy_loaded">true</var>
+                </var>
+                <var name="success">
+                    <var name="path">images/icons/addtocart/icon-success.svg</var>
+                    <var name="css_class">cs-addtocart__success-icon</var>
+                    <var name="inlined">true</var>
+                    <var name="lazy_loaded">true</var>
+                </var>
+                <var name="fail">
+                    <var name="path">images/icons/addtocart/icon-fail.svg</var>
+                    <var name="css_class">cs-addtocart__fail-icon</var>
+                    <var name="inlined">true</var>
+                    <var name="lazy_loaded">true</var>
+                </var>
+            </var>
+        </var>
+
+        <!-- Defines Icons for STOCK indicator (refers to PDP only). Had to be implemented here because ever type of product has its own definition pointing to the same template. Leave `path` empty to remove the icon completely. -->
+        <var name="stock_icons">
+            <var name="display">true</var>
+            <var name="in_stock">
+                <var name="icon_url">images/icons/stock/in-stock.svg</var>
+                <var name="css_class">cs-buybox__stock-icon cs-buybox__stock-icon--available</var>
+                <var name="inlined">true</var>
+            </var>
+            <var name="out_of_stock">
+                <var name="icon_url">images/icons/stock/out-of-stock.svg</var>
+                <var name="css_class">cs-buybox__stock-icon cs-buybox__stock-icon--unavailable</var>
+                <var name="inlined">true</var>
+            </var>
+        </var>
+
+        <!-- Gallery theme settings. Start. To check other options go to etc/view.xml in theme-blank -->
+        <var name="gallery">
+            <var name="maxheight">500px</var> <!-- Maximum height of the preview block in pixels or percent. Probably the same as product_page_image_medium height-->
+            <var name="navarrows">false</var> <!-- Turn on/off on the thumbs navigation sides arrows(true/false) -->
+            <var name="transition">
+                <var name="duration">250</var> <!-- Sets transition duration in ms -->
+            </var>
+            <var name="fullscreen">
+                <var name="transition">
+                    <var name="duration">250</var> <!-- Sets transition duration in ms -->
+                </var>
+            </var>
+        </var>
+        <!-- end. Gallery theme settings -->
+    </vars>
+
+    <media>
+        <images module="Magento_Catalog">
+            <image id="category_page_grid" type="small_image">
+                <width>260</width>
+                <height>270</height>
+            </image>
+            <image id="category_page_grid_x2" type="small_image">
+                <width>520</width>
+                <height>540</height>
+            </image>
+            <image id="related_products_list" type="small_image">
+                <width>240</width>
+                <height>300</height>
+            </image>
+            <image id="upsell_products_list" type="small_image">
+                <width>240</width>
+                <height>300</height>
+            </image>
+            <image id="product_page_more_views" type="thumbnail">
+                <width>75</width>
+                <height>75</height>
+            </image>
+            <image id="product_page_image_medium" type="image">
+                <width>500</width>
+                <height>500</height>
+            </image>
+            <image id="product_page_image_medium_no_frame" type="image">
+                <width>500</width>
+                <height>500</height>
+                <frame>false</frame>
+            </image>
+            <image id="product_page_image_small" type="thumbnail">
+                <width>78</width>
+                <height>78</height>
+            </image>
+            <image id="product_page_main_image" type="image">
+                <width>500</width>
+                <height>500</height>
+            </image>
+            <image id="product_page_main_image_default" type="image">
+                <width>500</width>
+                <height>500</height>
+            </image>
+            <image id="product_page_image_large" type="image">
+                <width>1000</width>
+                <height>1000</height>
+            </image>
+            <image id="product_page_image_large_no_frame" type="image">
+                <width>1000</width>
+                <height>1000</height>
+                <frame>false</frame>
+            </image>
+            <image id="product_page_more_views" type="thumbnail">
+                <width>90</width>
+                <height>90</height>
+            </image>
+            <image id="bundled_product_customization_page" type="thumbnail">
+                <width>50</width>
+                <height>50</height>
+            </image>
+            <image id="swatch_thumb" type="swatch_thumb">
+                <width>110</width>
+                <height>110</height>
+            </image>
+        </images>
+    </media>
+</view>

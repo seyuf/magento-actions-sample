@@ -1,0 +1,56 @@
+<?php
+$layout = $block->getLayout();
+$detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml') ?? [];
+?>
+<?php if (!empty($detailedInfoGroup)): ?>
+
+<div class="cs-product-details">
+
+<?php foreach ($detailedInfoGroup as $blockName):
+    $html = trim($layout->renderElement($blockName));
+
+    if (empty($html)) {
+        continue;
+    }
+
+    $alias = $layout->getElementAlias($blockName);
+    $label = __($block->getChildData($alias, 'title'))->render();
+    $id = str_replace('.', '-', $alias);
+    $containContent = $block->getChildData($alias, 'contain_content') ?? true;
+    $isCollapsible = $block->getChildData($alias, 'is_collapsible') ?? true;
+    $collapseOptions = $block->getChildData($alias, 'collapsible_widget_options');
+    $collapseOptionsJson = empty($collapseOptions) ? '{}' : json_encode($collapseOptions);
+    $additionalCssClasses = $block->getChildData($alias, 'additional_css_classes');
+?>
+    <section
+        class="cs-product-details__item cs-product-details__item--<?= $id; ?> <?= $additionalCssClasses ?>"
+        id="<?= $id; ?>"
+        <?= $isCollapsible ? 'data-mage-init=\'{"collapsible": ' . $collapseOptionsJson . '}\'' : '' ?>
+    >
+        <div class="cs-container cs-container--page-pdp-details-<?= $id; ?>">
+            <div class="cs-container__inner">
+                <?php if (!empty($label)): ?>
+                    <header class="cs-product-details__headline" data-role="title">
+                        <h2 class="cs-product-details__headline-title">
+                            <?= /* @escapeNotVerified */ $label; ?>
+                        </h2>
+                    </header>
+                <?php endif; ?>
+    <?php if (!$containContent): ?>
+            </div>
+        </div>
+    <?php endif; ?>
+        <div class="cs-product-details__content" data-role="content">
+            <?= /* @escapeNotVerified */ $html; ?>
+        </div>
+    <?php if ($containContent): ?>
+            </div>
+        </div>
+    <?php endif; ?>
+    </section>
+
+<?php endforeach; ?>
+
+</div>
+
+<?php endif; ?>

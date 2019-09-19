@@ -1,0 +1,127 @@
+.cs-product-stock-subscription__field {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%
+}
+.cs-product-stock-subscription__label {
+  margin-bottom: .5rem
+}
+.cs-product-stock-subscription__input-wrapper {
+  width: 100%
+}
+.cs-product-stock-subscription__input-wrapper .mage-error {
+  margin-bottom: .6rem
+}
+.cs-product-stock-subscription__submit {
+  display: inline-block;
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-align: center;
+  position: relative;
+  line-height: 1.275em;
+  margin: 0;
+  text-transform: none;
+  padding: .75em 1em;
+  box-sizing: border-box;
+  transition: background-color .5s,border-color .5s,fill .5s,color .5s;
+  vertical-align: middle;
+  z-index: 5;
+  will-change: transform,background-color,border-color,fill,color;
+  margin-top: .7rem
+}
+.cs-product-stock-subscription__submit:active,
+.cs-product-stock-subscription__submit:focus,
+.cs-product-stock-subscription__submit:hover {
+  background-color: #324dcf!important
+}
+.cs-product-stock-subscription__submit:after,
+.cs-product-stock-subscription__submit:before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  bottom: -1px;
+  right: -1px
+}
+.cs-product-stock-subscription__submit:before {
+  width: 5.5rem;
+  border-radius: 0 3px 3px 0;
+  z-index: -1;
+  background: linear-gradient(100deg,transparent 0,transparent 15%,#142b9e 15%,#142b9e 100%)
+}
+.cs-product-stock-subscription__submit:after {
+  width: 4rem;
+  min-width: auto;
+  background-color: #142b9e;
+  transition: width .25s linear;
+  z-index: -2;
+  border-radius: 3px
+}
+.cs-product-stock-subscription__submit:hover:after {
+  width: calc(100% + 2px)
+}
+.cs-product-stock-subscription__submit::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+  margin: 0
+}
+.cs-product-stock-subscription__submit,
+.cs-product-stock-subscription__submit:visited {
+  cursor: pointer;
+  border-radius: 3px;
+  outline-offset: 1px;
+  text-decoration: none;
+  box-shadow: none;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #324dcf
+}
+.cs-product-stock-subscription__submit *,
+.cs-product-stock-subscription__submit:visited * {
+  color: #fff;
+  fill: #fff
+}
+.cs-product-stock-subscription__submit:active:not([disabled]),
+.cs-product-stock-subscription__submit:focus:not([disabled]),
+.cs-product-stock-subscription__submit:hover:not([disabled]) {
+  box-shadow: none;
+  outline: 0;
+  text-decoration: none;
+  border: 1px solid transparent;
+  color: #fff;
+  background-color: #142b9e
+}
+.cs-product-stock-subscription__submit:active:not([disabled]) *,
+.cs-product-stock-subscription__submit:focus:not([disabled]) *,
+.cs-product-stock-subscription__submit:hover:not([disabled]) * {
+  color: #fff;
+  fill: #fff
+}
+.cs-product-stock-subscription__submit[disabled] {
+  opacity: .65;
+  cursor: auto
+}
+.cs-product-stock-subscription__submit-label {
+  margin-top: 0;
+  z-index: 1;
+  font-weight: 700;
+  vertical-align: baseline;
+  display: inline-block;
+  line-height: 1.275em;
+  letter-spacing: normal;
+  padding-right: 4em
+}
+.cs-product-stock-subscription__submit-icon {
+  max-width: 1em;
+  max-height: 1.4rem;
+  z-index: 2;
+  height: auto;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translate3d(0,-50%,0);
+  margin-right: 0;
+  right: 1em;
+  max-width: 2.2rem;
+  max-height: 2.2rem
+}

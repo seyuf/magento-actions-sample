@@ -1,0 +1,64 @@
+<?php
+    // @codingStandardsIgnoreFile
+?>
+<?php
+    /**
+     * Product list toolbar
+     *
+     * @var $block \Magento\Catalog\Block\Product\ProductList\Toolbar
+     */
+    use Magento\Catalog\Model\Product\ProductList\Toolbar;
+?>
+<?php
+    $prefixLabel = $block->getVar('toolbar/limiter/prefix_label', 'Magento_Catalog');
+    $suffixLabel = $block->getVar('toolbar/limiter/suffix_label', 'Magento_Catalog');
+    $displayAsSelect = $block->getVar('toolbar/limiter/as_select', 'Magento_Catalog');
+?>
+<div class="field limiter cs-limiter"<?php if(!$displayAsSelect): ?> role="navigation"<?php endif ?>>
+    <?php if(!empty($prefixLabel)): ?>
+        <label class="label cs-toolbar__label cs-limiter__label cs-limiter__label--prefix">
+            <span><?= __($prefixLabel) ?></span>
+        </label>
+    <?php endif; ?>
+
+    <div class="control cs-limiter__control<?php if(!$displayAsSelect): ?> cs-visually-hidden<?php endif ?>">
+        <select id="limiter" data-role="limiter" class="limiter-options cs-select cs-limiter__select">
+            <?php foreach ($block->getAvailableLimit() as $_key => $_limit): ?>
+                <option value="<?= /* @escapeNotVerified */ $_key ?>"<?php if ($block->isLimitCurrent($_key)): ?>
+                    selected="selected"<?php endif ?>>
+                    <?= /* @escapeNotVerified */ $_limit ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <?php if(!$displayAsSelect): ?>
+        <ul class="cs-limiter__pagination" role="menubar">
+            <?php foreach ($block->getAvailableLimit() as $key => $limit): ?>
+                <li class="cs-limiter__pagination-item<?php if ($block->isLimitCurrent($key)): ?>  cs-limiter__pagination-item--current<?php endif ?>" role="none">
+                    <button class="cs-limiter__pagination-number" data-value="<?= $key ?>" role="menuitem"><span><?= $limit ?></span></button>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <script>
+            require([
+                'jquery'
+            ], function($) {
+                $('.cs-limiter__pagination-number').on('click', function() {
+                    var $limiter = $('.cs-limiter select');
+                    var chosenVal = $(this).data('value');
+                    if (/^([1-9]\d*|all)$/.test(chosenVal)) {
+                        $limiter.val(chosenVal).trigger('change');
+                    }
+                });
+            });
+        </script>
+    <?php endif; ?>
+
+    <?php if(!empty($suffixLabel)): ?>
+        <label class="label cs-toolbar__label cs-limiter__label cs-limiter__label--suffix">
+            <span><?= __($suffixLabel) ?></span>
+        </label>
+    <?php endif; ?>
+</div>

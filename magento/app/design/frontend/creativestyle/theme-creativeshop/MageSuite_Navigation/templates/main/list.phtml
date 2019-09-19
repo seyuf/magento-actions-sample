@@ -1,0 +1,100 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+
+$level = $block->getLevel();
+
+$item = $block->getItem();
+$itemId = $item->getId();
+$itemUrl = $item->getUrl();
+$itemLabel = $item->getLabel();
+$itemHasCustomUrl = $item->hasCustomUrl();
+$itemCategoryIdentifier = $item->getCategoryIdentifier() ?? '';
+
+$isMegaDropdownSublist = $block->getIsMegaDropdownSublist();
+$isAllCategories = $block->getIsAllCategories();
+$showCategoryIconSubcats = $block->getShowCategoryIconSubcats();
+$showProductsAmountSubcats = $block->getShowProductsAmountSubcats();
+$thirdLevelLimit = $block->getThirdLevelLimit();
+
+$listClasses = '';
+if ($level >= 1 && !$isAllCategories) {
+    $listClasses = ' cs-navigation__list--level_' . $level;
+}
+if ($level === 1 && $isMegaDropdownSublist) {
+    $listClasses .= ' cs-navigation__list--hidden';
+} elseif ($isAllCategories) {
+    $listClasses .= ' cs-navigation__list--all-categories';
+}
+?>
+<ul
+    class="cs-navigation__list<?= $listClasses; ?>"
+    data-parent-item-id="<?= $itemId; ?>"
+>
+<?php if ($level === 1 && !$isAllCategories): ?>
+    <li
+        class="cs-navigation__item cs-navigation__item--hidden <?= $itemHasCustomUrl ? ' cs-navigation__item--custom' : '' ?>"
+    >
+        <a href="<?= $itemUrl; ?>" class="cs-navigation__link cs-navigation__link--touch">
+            <?= __("Go to %1", $itemLabel); ?>
+        </a>
+    </li>
+<?php endif; ?>
+<?php
+$subItems = $item->getSubItems();
+$subItemsCount = count($subItems);
+foreach($subItems as $subItemIndex => $subItem):
+    $subItem = $subItem;
+    $subItemId = $subItem->getId();
+    $subItemUrl = $subItem->getUrl();
+    $subItemLabel = $subItem->getLabel();
+    $subItemHasCustomUrl = $subItem->hasCustomUrl();
+    $subItemCategoryIdentifier = $subItem->getIdentifier() ?? '';
+    $subItemCategoryIcon = $showCategoryIconSubcats ? $subItem->getCategoryIcon() : '';
+    $subItemNumberOfProducts = $showProductsAmountSubcats ? $subItem->getNumberOfProducts() : 0;
+?>
+    <li
+        class="cs-navigation__item<?= $isAllCategories ? ' cs-navigation__item--all-categories' : ' cs-navigation__item--level_' .$level ?><?= $subItemHasCustomUrl ? ' cs-navigation__item--custom' : ''; ?><?= $isAllCategories && $subItem->hasSubItems() && $level === 1 ? ' cs-navigation__item--has-children' : ''; ?>"
+        data-category-id="<?= $subItemId; ?>"
+        data-category-identifier="<?= $subItemCategoryIdentifier; ?>"
+    >
+        <a
+            href="<?= $subItemUrl; ?>"
+            class="cs-navigation__link<?= $isAllCategories ? ' cs-navigation__link--all-categories' : ' cs-navigation__link--level_' .$level ?><?= $subItemCategoryIcon ? ' cs-navigation__link--with-icon' : ''; ?>"
+        >
+            <?php if ($subItemCategoryIcon): ?>
+                <span class="cs-navigation__link-icon-wrapper">
+                    <img src="<?= $subItemCategoryIcon; ?>" alt="<?= $subItemLabel; ?>" class="cs-navigation__link-icon">
+                </span>
+            <?php endif; ?>
+            <?= $subItemLabel; ?>
+            <?php if ($subItemNumberOfProducts): ?>
+                <span class="cs-navigation__link-products-qty"><?= $subItemNumberOfProducts; ?></span>
+            <?php endif; ?>
+        </a>
+        <?php
+            if (!$isAllCategories && $subItem->hasSubItems()) {
+                echo $this->getLayout()
+                    ->createBlock(Magento\Framework\View\Element\Template::class)
+                    ->setTemplate("MageSuite_Navigation::main/list.phtml")
+                    ->setItem($subItem)
+                    ->setShowProductsAmountSubcats($showProductsAmountSubcats)
+                    ->setShowCategoryIconSubcats($showCategoryIconSubcats)
+                    ->setLevel($level + 1)
+                    ->setThirdLevelLimit($thirdLevelLimit)
+                    ->toHtml();
+            }
+        ?>
+    </li>
+    <?php /* Levels in mega dropdown have different count because of styling. */ ?>
+    <?php if ($level === 2 && $subItemIndex === $thirdLevelLimit - 1 && $subItemsCount > $thirdLevelLimit): ?>
+    <li
+        class="cs-navigation__item cs-navigation__item--level_<?= $level ; ?><?= $itemHasCustomUrl ? ' cs-navigation__item--custom' : '' ?>"
+    >
+        <a href="<?= $itemUrl; ?>" class="cs-navigation__link cs-navigation__link--more cs-navigation__link--level_<?= $level ; ?>">
+            <?= __("More..."); ?>
+        </a>
+    </li>
+    <?php break; endif; ?>
+<?php endforeach; ?>
+</ul>

@@ -1,0 +1,69 @@
+<?php
+/* @var $block \Magento\Wishlist\Block\Customer\Sidebar */
+/* @var \Magento\Wishlist\Helper\Data $wishlistHelper */
+$wishlistHelper = $this->helper('Magento\Wishlist\Helper\Data');
+$items = $wishlistHelper->getWishlistItemCollection()->getItems();
+
+$viewMode = $block->getViewMode();
+$viewModeClass = $block->getGridComponentClass();
+$viewModeAdditionalClass = $block->hasAdditionalGridComponentClass() ? ' ' .$block->getAdditionalGridComponentClass() : '';
+$viewModeListClass = $block->getGridComponentListClass();
+$viewModeListItemClass = $block->getGridComponentListItemClass();
+
+$pageLayout = $this->helper(\MageSuite\ThemeHelpers\Helper\PageLayout::class)->getPageLayout();
+if ($pageLayout != '1column') {
+    $viewModeClass .= ' ' . $viewModeClass . '--with-sidebar';
+}
+
+?>
+<?php if ($wishlistHelper->isAllow()) : ?>
+    <div class="block block-wishlist" data-bind="scope: 'wishlist'">
+        <div class="block-title">
+            <strong role="heading" aria-level="2"><?= $block->escapeHtml($block->getTitle()) ?></strong>
+            <!-- ko if: wishlist().counter -->
+            <span data-bind="text: wishlist().counter" class="counter"></span>
+            <!-- /ko -->
+            <a
+                href="<?php /* @escapeNotVerified */ echo $this->helper('Magento\Wishlist\Helper\Data')->getListUrl() ?>"
+                title="<?php /* @escapeNotVerified */ echo __('Go to Wish List') ?>"
+            >
+                <?php /* @escapeNotVerified */ echo __('Go to Wish List') ?>
+            </a>
+        </div>
+
+        <div class="block-content">
+            <?php if(empty($items)): ?>
+                <p><?php /* @escapeNotVerified */ echo __('You have no items in your wish list.') ?></p>
+            <?php else: ?>
+                <div class="<?= $viewModeClass . $viewModeAdditionalClass ?>">
+                    <ol class="<?= $viewModeListClass ?>" id="wishlist-sidebar">
+                        <?php foreach($items as $item): ?>
+                            <li class="<?= $viewModeListItemClass ?>">
+                                <?= $this->getLayout()
+                                    ->createBlock(\MageSuite\ProductTile\Block\Tile::class)
+                                    ->setAreas(['wishlist'])
+                                    ->setViewMode($viewMode)
+                                    ->setWishlistItem($item)
+                                    ->render($item->getProduct());
+                                ?>
+                            </li>
+                        <?php endforeach; ?>
+                    </ol>
+                </div>
+            <?php endif; ?>
+        </div>
+    </div>
+<?php endif ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "wishlist": {
+                        "component": "Magento_Wishlist/js/view/wishlist"
+                    }
+                }
+            }
+        }
+    }
+</script>

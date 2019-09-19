@@ -1,0 +1,38 @@
+<?php
+    /** @var \Magento\Catalog\Block\Product\View\Description $block */
+    $helper = $this->helper('MageSuite\Frontend\Helper\Product');
+    $badgeValue = $helper->getSalePercentage($block->getProduct());
+?>
+
+<?php if($badgeValue): ?>
+    <?php 
+        $label = $block->getLabel();
+        $value = $block->getValueDisplay();
+
+        $wrapperTag = $block->getWrapperTag() ?? 'li';
+
+        $wrapperClass = $block->getWrapperCssClass();
+        $wrapperClass = $wrapperClass ? sprintf('class="%s"', $wrapperClass) : '';
+
+        $cssClass = $block->getCssClass();
+        $cssClass = $cssClass ? sprintf('class="%s"', $cssClass) : '';
+
+        $badgeTextClass = $block->getTextCssClass();
+        $badgeTextClass = $badgeTextClass ? sprintf('class="%s"', $badgeTextClass) : '';
+
+        $valuePrefix = $block->getValuePrefix();
+        $valueSuffix = $block->getValueSuffix();
+    ?>
+    <<?= $wrapperTag ?> <?= $wrapperClass ?>>
+        <span <?= $cssClass ?>>
+        <?php if ($label): ?>
+            <span <?= $badgeTextClass ?>><?= $label ?></span>
+        <?php endif; ?>
+        <?php if ($value): ?>
+            <span <?= $badgeTextClass ?>><?= $valuePrefix ?><?= $badgeValue ?><?= $valueSuffix ?></span>
+        <?php endif; ?>
+        </span>
+    </<?= $wrapperTag ?>>
+<?php endif; ?>
+
+

@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Attach css bundle for this page type -->
+        <css src="css/customer.css" />
+    </head>
+    <body>
+        <!-- Attach correct js bundle for page type -->
+        <referenceBlock name="scripts">
+            <arguments>
+                <argument name="bundle_name" xsi:type="string">customer</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">account</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">My account</item>
+                    <item name="label" xsi:type="string" translate="true">My account</item>
+                    <item name="link" xsi:type="string">/customer/account/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">edit</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Edit account information</item>
+                    <item name="label" xsi:type="string" translate="true">Edit account information</item>
+                </argument>
+            </action>
+        </referenceBlock>
+
+        <referenceBlock name="customer_edit">
+            <block class="MageSuite\ThemeHelpers\Block\Icon" name="account_edit.password-strength-meter-icon">
+                <arguments>
+                    <argument name="icon_url" xsi:type="string">images/icons/forms/icon-password-strength-meter.svg</argument>
+                    <argument name="css_class" xsi:type="string">password-strength-meter__icon</argument>
+                    <argument name="inlined" xsi:type="boolean">true</argument>
+                    <argument name="lazy_loaded" xsi:type="boolean">false</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

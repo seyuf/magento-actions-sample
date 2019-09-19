@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Attach css bundle for this page type -->
+        <css src="css/checkout.css" />
+    </head>
+    <body>
+        <!-- Attach correct js bundle for page type -->
+        <referenceBlock name="scripts">
+            <arguments>
+                <argument name="bundle_name" xsi:type="string">checkout</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="breadcrumbs">
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">home</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Home</item>
+                    <item name="label" xsi:type="string" translate="true">Home</item>
+                    <item name="link" xsi:type="string">/</item>
+                </argument>
+            </action>
+            <action method="addCrumb">
+                <argument name="crumbName" xsi:type="string">Order success</argument>
+                <argument name="crumbInfo" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Order success</item>
+                    <item name="label" xsi:type="string" translate="true">Order success</item>
+                </argument>
+            </action>
+        </referenceBlock>
+
+        <move element="page.main.title" destination="info.page" before="-"/>
+
+        <referenceContainer name="main.content" htmlClass="cs-container cs-container--success-page"/>
+
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">Thank you for placing your order</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <container name="info.page" htmlTag="div" htmlClass="cs-container__inner cs-page-success">
+                <container name="info.page.inner" htmlTag="div" htmlClass="cs-page-success__inner" />
+            </container>
+        </referenceContainer>
+
+        <move element="checkout.success" destination="info.page.inner"/>
+        <move element="checkout.registration" destination="info.page.inner"/>
+
+        <referenceBlock name="checkout.success">
+            <block class="MageSuite\ThemeHelpers\Block\Icon" name="success.page.continue.button.icon">
+                <arguments>
+                    <argument name="icon_url" xsi:type="string">images/icons/arrow_next.svg</argument>
+                    <argument name="css_class" xsi:type="string">cs-page-success__button-icon</argument>
+                    <argument name="inlined" xsi:type="boolean">true</argument>
+                    <argument name="lazy_loaded" xsi:type="boolean">true</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+
+    </body>
+</page>

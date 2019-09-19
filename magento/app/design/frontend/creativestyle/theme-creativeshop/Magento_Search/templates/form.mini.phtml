@@ -1,0 +1,45 @@
+<?php
+/**
+ * @var $block \Magento\Framework\View\Element\Template
+ * @var $helper \Magento\Search\Helper\Data 
+ */
+$helper = $this->helper('Magento\Search\Helper\Data');
+?>
+
+<div class="cs-header__search">
+    <form class="cs-header-search" action="<?= /* @escapeNotVerified */ $helper->getResultUrl() ?>" method="get" id="cs-header-search">
+        <input
+            class="cs-header-search__input"
+            data-mage-init='{
+                "quickSearch":{
+                    "formSelector":"#cs-header-search",
+                    "url":"<?= /* @escapeNotVerified */ $block->getUrl('search/ajax/suggest', ['_secure' => $block->getRequest()->isSecure()]); ?>",
+                    "destinationSelector":"#cs-header-search__autocomplete"
+                }
+            }'
+            type="search"
+            name="<?= /* @escapeNotVerified */ $helper->getQueryParamName() ?>"
+            value="<?= /* @escapeNotVerified */ $helper->getEscapedQueryText() ?>"
+            placeholder="<?= /* @escapeNotVerified */ $block->getSearchPlaceholder(); ?>"
+            maxlength="<?= /* @escapeNotVerified */ $helper->getMaxQueryLength();?>"
+            aria-haspopup="false"
+            aria-autocomplete="both"
+            autocomplete="off">
+        <div class="cs-header-search__autocomplete" id="cs-header-search__autocomplete"></div>
+        <div class="cs-header-search__action">
+            <span class="cs-header-search__close">
+                <?= $block->getChildHtml('top.search.icon.close'); ?>
+                <span class="cs-header-search__close-label"><?= /* @escapeNotVerified */ __('Close search'); ?></span>
+            </span>
+            <button class="cs-header-search__button" type="submit">
+                <div class="cs-header-search__button-container cs-header-search__button-container--search">
+                    <?= $block->getChildHtml('top.search.icon.submit'); ?>
+                </div>
+                <div class="cs-header-search__button-container cs-header-search__button-container--loader">
+                    <?= $block->getChildHtml('top.search.icon.loader'); ?>
+                </div>
+                <span class="cs-header-search__button-label"><?= /* @escapeNotVerified */ __('Search'); ?></span>
+            </button>
+        </div>
+    </form>
+</div>

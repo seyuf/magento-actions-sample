@@ -1,0 +1,285 @@
+<?php
+/** @var $block \MageSuite\ContentConstructorFrontend\Block\Component\ImageTeaser */
+$viewModel = $block->getViewModel();
+$visibility = $block->getVisibilityClass();
+$maxContentWidth = $block->getVar('max_content_width');
+
+$imageTeaser = $block->getData();
+
+$desktopLayout = $imageTeaser['scenario']['desktopLayout']['id'];
+$mobileLayout = $imageTeaser['scenario']['mobileLayout']['id'];
+
+$teaserWidth = $imageTeaser['scenario']['teaserWidth']['id'];
+
+if (!$teaserWidth) {
+    $teaserWidth = 'container-slider';
+}
+$mosaicProportions = isset($imageTeaser['scenario']['proportions']) && isset($imageTeaser['scenario']['proportions']['id']) ? $imageTeaser['scenario']['proportions']['id'] : '';
+
+$itemsPerRow = $desktopLayout;
+$itemsPerView = $itemsPerRow;
+
+$itemsPerRowMobile = 2;
+$itemsPerViewMobile = $block->getItemsPerViewMobile() ?? 1;
+
+$isSlider = false;
+$isSliderMobile = false;
+
+if (in_array($mobileLayout, ['mobile-large', 'mobile-slider', 'mobile-in-columns'])) {
+    $itemsPerRowMobile = 1;
+}
+
+if ($teaserWidth == 'window-slider' || $teaserWidth == 'container-slider') {
+    $isSlider = true;
+}
+
+if ($mobileLayout == 'mobile-slider') {
+    $isSliderMobile = true;
+}
+
+$componentClasses = $block->getMix();
+$componentClasses .= $block->getSkipSpacing() ? ' cs-image-teaser--skip-spacing' : '';
+$componentClasses .= ' ' . $block->getVar('image_teaser/additional_css_classes');
+
+$contentPlacement = $imageTeaser['scenario']['contentPlacement']['id'];
+
+$sizesMobile = '(max-width: 48em) 100vw';
+$sizesDesktop = sprintf('%svw', 100 / $itemsPerViewMobile);
+
+if ($teaserWidth == 'window-slider') {
+    $sizesMobile = '(max-width: 48em) 80vw';
+    $sizesDesktop = (80 / $itemsPerView) . 'vw';
+} elseif ($teaserWidth == 'container') {
+    $sizesDesktop = '(min-width: ' . $maxContentWidth . 'px) ' . ($maxContentWidth / $itemsPerView) . 'px, ' . $sizesDesktop;
+}
+
+$sizes = $sizesMobile . ', ' . $sizesDesktop;
+
+$containerClasses = ($teaserWidth == 'window' || $teaserWidth == 'window-slider') ? ' cs-container--image-teaser-window-width' : '';
+
+$containerClasses = $containerClasses . ' ' . $block->getContainerMix();
+if (isset($imageTeaser['cc_css_classes'])):
+    $containerClasses .= ' ' . $imageTeaser['cc_css_classes'];
+endif;
+
+$windowWidthClass = ($teaserWidth == 'window' || $teaserWidth == 'window-slider') ? ' cs-image-teaser--window-width' : '';
+
+$jsConfig = isset($imageTeaser['jsConfig']) ? json_encode($imageTeaser['jsConfig']) : '{}';
+
+$gridTeaser = $block->getGridTeaser();
+
+if ($gridTeaser) {
+    $teaser = $block->getTeaserData();
+    $teaserId = $block->getTeaserId();
+    $brickClass = $block->getBrickClass();
+
+    $teaserBrickClass = $brickClass . ' ' . $brickClass . '--teaser';
+    if ($teaser['size']['x'] == 2) {
+        $teaserBrickClass .= ' ' . $brickClass . '--x2';
+    }
+    if ($teaser['size']['y'] == 2) {
+        $teaserBrickClass .= ' ' . $brickClass . '--y2';
+    }
+}
+?>
+
+<?php if ($gridTeaser): ?>
+<li class="<?= $teaserBrickClass ?>" data-teaser-id="<?= $teaserId ?>">
+<?php else: ?>
+<div <?= $visibility ? 'class="' . $visibility . '"' : ''; ?>>
+<?php endif; ?>
+    <?= $this->getLayout()
+        ->createBlock(\Magento\Framework\View\Element\Template::class)
+        ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/before_container.phtml')
+        ->setImageTeaser($imageTeaser)
+        ->setIsSlider($isSlider)
+        ->setIsSliderMobile($isSliderMobile)
+        ->setContentPlacement($contentPlacement)
+        ->toHtml();
+    ?>
+
+    <div class="cs-container cs-container--image-teaser<?= $containerClasses ?>">
+        <?php if ($teaserWidth == 'container' or $teaserWidth == 'container-slider'): ?>
+            <div class="cs-container__inner">
+        <?php endif; ?>
+            <?= $this->getLayout()
+                ->createBlock(\Magento\Framework\View\Element\Template::class)
+                ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/before_component.phtml')
+                ->setImageTeaser($imageTeaser)
+                ->setIsSlider($isSlider)
+                ->setIsSliderMobile($isSliderMobile)
+                ->setContentPlacement($contentPlacement)
+                ->toHtml();
+            ?>
+
+            <div class="cs-image-teaser <?= $windowWidthClass ?>
+             cs-image-teaser--items-in-row-<?= $itemsPerRow ?>
+             cs-image-teaser--items-in-row-mobile-<?= $itemsPerRowMobile ?>
+             <?= $isSlider ? 'cs-image-teaser--slider' : '' ?>
+             <?= $teaserWidth == 'window-slider' ? 'cs-image-teaser--full-width-slider' : '' ?>
+             <?= $componentClasses ?>"
+                data-items-per-view="<?= $itemsPerView ?>"
+                <?= $itemsPerViewMobile ? 'data-mobile-items-per-view="' . $itemsPerViewMobile . '"' : '' ?>
+                data-is-slider="<?= $isSlider ?>"
+                data-mobile-is-slider="<?= $isSliderMobile ?>"
+                data-layout="<?= $contentPlacement ?>"
+                data-js-configuration='<?= $jsConfig; ?>'
+            >
+
+                <?= $this->getLayout()
+                    ->createBlock(\Magento\Framework\View\Element\Template::class)
+                    ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/before_carousel.phtml')
+                    ->setImageTeaser($imageTeaser)
+                    ->setIsSlider($isSlider)
+                    ->setIsSliderMobile($isSliderMobile)
+                    ->setContentPlacement($contentPlacement)
+                    ->toHtml();
+                ?>
+
+                <div class="cs-image-teaser__carousel">
+                    <?= $this->getLayout()
+                        ->createBlock(\Magento\Framework\View\Element\Template::class)
+                        ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/before_wrapper.phtml')
+                        ->setImageTeaser($imageTeaser)
+                        ->setIsSlider($isSlider)
+                        ->setIsSliderMobile($isSliderMobile)
+                        ->setContentPlacement($contentPlacement)
+                        ->toHtml();
+                    ?>
+
+                    <div class="cs-image-teaser__wrapper cs-image-teaser__wrapper--content-<?= $contentPlacement ?>">
+                        <?= $this->getLayout()
+                            ->createBlock(\Magento\Framework\View\Element\Template::class)
+                            ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/before_slides.phtml')
+                            ->setImageTeaser($imageTeaser)
+                            ->setIsSlider($isSlider)
+                            ->setIsSliderMobile($isSliderMobile)
+                            ->setContentPlacement($contentPlacement)
+                            ->toHtml();
+                        ?>
+
+                        <ul class="cs-image-teaser__slides <?= $mosaicProportions != '' ? ' cs-image-teaser__slides--mosaic-scenario-' . $mosaicProportions : '' ?>">
+                            <?php foreach ($viewModel->getSlides() as $slide): ?>
+                                <?= $this->getLayout()
+                                    ->createBlock(\Magento\Framework\View\Element\Template::class)
+                                    ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/image_teaser_slide.phtml')
+                                    ->setSlide($slide)
+                                    ->setImageTeaser($imageTeaser)
+                                    ->setIsSlider($isSlider)
+                                    ->setIsSliderMobile($isSliderMobile)
+                                    ->setContentPlacement($contentPlacement)
+                                    ->toHtml();
+                                ?>
+                            <?php endforeach; ?>
+                        </ul>
+
+                        <?= $this->getLayout()
+                            ->createBlock(\Magento\Framework\View\Element\Template::class)
+                            ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/after_slides.phtml')
+                            ->setImageTeaser($imageTeaser)
+                            ->setIsSlider($isSlider)
+                            ->setIsSliderMobile($isSliderMobile)
+                            ->setContentPlacement($contentPlacement)
+                            ->toHtml();
+                        ?>
+                    </div>
+
+                    <?= $this->getLayout()
+                        ->createBlock(\Magento\Framework\View\Element\Template::class)
+                        ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/after_wrapper.phtml')
+                        ->setImageTeaser($imageTeaser)
+                        ->setIsSlider($isSlider)
+                        ->setIsSliderMobile($isSliderMobile)
+                        ->setContentPlacement($contentPlacement)
+                        ->toHtml();
+                    ?>
+
+                    <?php if (($isSlider or $isSliderMobile) && $block->getVar('image_teaser/navigation/show')): ?>
+                        <?= $this->getLayout()
+                            ->createBlock(\Magento\Framework\View\Element\Template::class)
+                            ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/nav-prev.phtml')
+                            ->setIcon($block->getVar('image_teaser/navigation/arrows/prev/path'))
+                            ->setImageTeaserData($imageTeaser)
+                            ->toHtml();
+                        ?>
+                        <?= $this->getLayout()
+                            ->createBlock(\Magento\Framework\View\Element\Template::class)
+                            ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/nav-next.phtml')
+                            ->setIcon($block->getVar('image_teaser/navigation/arrows/next/path'))
+                            ->setImageTeaserData($imageTeaser)
+                            ->toHtml();
+                        ?>
+                    <?php endif; ?>
+
+                    <?= $this->getLayout()
+                        ->createBlock(\Magento\Framework\View\Element\Template::class)
+                        ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/after_nav.phtml')
+                        ->setImageTeaser($imageTeaser)
+                        ->setIsSlider($isSlider)
+                        ->setIsSliderMobile($isSliderMobile)
+                        ->setContentPlacement($contentPlacement)
+                        ->toHtml();
+                    ?>
+
+                </div>
+
+                <?= $this->getLayout()
+                    ->createBlock(\Magento\Framework\View\Element\Template::class)
+                    ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/after_carousel.phtml')
+                    ->setImageTeaser($imageTeaser)
+                    ->setIsSlider($isSlider)
+                    ->setIsSliderMobile($isSliderMobile)
+                    ->setContentPlacement($contentPlacement)
+                    ->toHtml();
+                ?>
+
+                <?= $this->getLayout()
+                    ->createBlock(\Magento\Framework\View\Element\Template::class)
+                    ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/pagination.phtml')
+                    ->setImageTeaserData($imageTeaser)
+                    ->setIsSlider($isSlider)
+                    ->setIsSliderMobile($isSliderMobile)
+                    ->setShowPagination($block->getVar('image_teaser/pagination/show'))
+                    ->toHtml();
+                ?>
+
+                <?= $this->getLayout()
+                    ->createBlock(\Magento\Framework\View\Element\Template::class)
+                    ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/after_pagination.phtml')
+                    ->setImageTeaser($imageTeaser)
+                    ->setIsSlider($isSlider)
+                    ->setIsSliderMobile($isSliderMobile)
+                    ->setContentPlacement($contentPlacement)
+                    ->toHtml();
+                ?>
+            </div>
+
+            <?= $this->getLayout()
+                ->createBlock(\Magento\Framework\View\Element\Template::class)
+                ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/after_component.phtml')
+                ->setImageTeaser($imageTeaser)
+                ->setIsSlider($isSlider)
+                ->setIsSliderMobile($isSliderMobile)
+                ->setContentPlacement($contentPlacement)
+                ->toHtml();
+            ?>
+
+        <?php if ($teaserWidth == 'container' or $teaserWidth == 'container-slider'): ?>
+            </div>
+        <?php endif; ?>
+    </div>
+
+    <?= $this->getLayout()
+        ->createBlock(\Magento\Framework\View\Element\Template::class)
+        ->setTemplate('MageSuite_ContentConstructorFrontend::component/image_teaser/elements/hotspots/after_container.phtml')
+        ->setImageTeaser($imageTeaser)
+        ->setIsSlider($isSlider)
+        ->setIsSliderMobile($isSliderMobile)
+        ->setContentPlacement($contentPlacement)
+        ->toHtml();
+    ?>
+<?php if ($gridTeaser): ?>
+</li>
+<?php else: ?>
+</div>
+<?php endif; ?>

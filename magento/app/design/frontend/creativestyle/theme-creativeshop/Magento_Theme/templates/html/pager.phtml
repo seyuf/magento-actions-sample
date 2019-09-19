@@ -1,0 +1,182 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/**
+ * @see \Magento\Theme\Block\Html\Pager
+ */
+?>
+
+<?php if ($block->getCollection()->getSize()): ?>
+
+    <?php if ($block->getShowAmounts()): ?>
+        <div class="cs-toolbar__item cs-toolbar__item--amount">
+            <?php include ($block->getTemplateFile('Magento_Catalog::product/list/toolbar/amount.phtml')); ?>
+        </div>
+    <?php endif ?>
+
+    <?php if ($block->getLastPageNum()>1): ?>
+        <?php
+            $prefix = $block->getVar('toolbar/pagination/prefix_label', 'Magento_Theme');
+            $displayPrevNextLabels = $block->getVar('toolbar/pagination/display_prev_next_labels', 'Magento_Theme');
+            $displayPrevNextButtonsIfDisabled = $block->getVar('toolbar/pagination/display_prev_next_buttons_if_disabled', 'Magento_Theme');
+            $lastPageNum = $block->getLastPageNum();
+            $isFirstPage = $block->isFirstPage();
+            $isLastPage = $block->isLastPage();
+        ?>
+        <div class="pages cs-pagination" role="navigation">
+            <div class="cs-pagination__content" role="menubar">
+                <?php if (!$isFirstPage || $isFirstPage && $displayPrevNextButtonsIfDisabled): ?>
+                    <?php 
+                        $prevPageLabel = $block->getAnchorTextForPrevious() ?? __('Previous page');
+                        $previousPageIcon = $block->getVar('toolbar/pagination/icons/previous_page', 'Magento_Theme');
+                        $previousPageIcon = !empty($previousPageIcon) 
+                            ? $this->getLayout()
+                                 ->createBlock('MageSuite\ThemeHelpers\Block\Icon')
+                                 ->setIconUrl($previousPageIcon)
+                                 ->setCssClass('cs-pagination__action-icon cs-pagination__action-icon--previous-page')
+                                 ->setAltText($prevPageLabel)
+                                 ->setInlined(true)
+                                 ->setLazyLoaded(true)
+                                 ->toHtml()
+                            : '';
+                        $prevActionTag = $isFirstPage && $displayPrevNextButtonsIfDisabled ? 'span' : 'a';
+                    ?>
+                    <div class="item pages-item-previous cs-pagination__prev" role="none">
+                        <<?= $prevActionTag ?> class="<?= /* @escapeNotVerified */ $prevPageLabel ? 'link ' : 'action ' ?> previous cs-pagination__action cs-pagination__action--previous-page<?= $prevActionTag != 'a' ? ' cs-pagination__action--disabled' : ''; ?>"
+                          <?php if($prevActionTag == 'a'): ?> href="<?= /* @escapeNotVerified */ $block->getPreviousPageUrl() ?>"<?php endif; ?>  
+                          title="<?= /* @escapeNotVerified */ $prevPageLabel ?>"
+                          tabindex="0"
+                          role="menuitem">
+                            <?= $previousPageIcon ?>
+                            <?php if($displayPrevNextLabels): ?>
+                                <span class="cs-pagination__action-label cs-pagination__action-label--previous-page"><?= /* @escapeNotVerified */ $prevPageLabel ?></span>
+                            <?php endif; ?>
+                        </<?= $prevActionTag ?>>
+                    </div>
+                <?php endif;?>
+
+                <?php if(!empty($prefix)): ?>
+                    <?php if($this->hasInputSwitcher()): ?>
+                        <label class="label pages-label cs-pagination__prefix-label" role="none"><?= /* @escapeNotVerified */ __($prefix) ?></label>
+                    <?php else: ?>
+                        <p class="label pages-label cs-pagination__prefix-label" role="none"><?= /* @escapeNotVerified */ __($prefix) ?></p>
+                    <?php endif; ?>
+                <?php endif; ?>
+
+                <?php if($this->hasInputSwitcher()): ?>
+
+                    <?php 
+                        $lastPageSeparator = $block->getVar('toolbar/pagination/last_page_separator', 'Magento_Theme');
+                        $lastPageSeparator = !empty($lastPageSeparator) ? __($lastPageSeparator) : '/'; 
+                    ?>
+                    <div class="field cs-pagination__page-provider">
+                        <input
+                            class="input-text cs-pagination__page-provider-input"
+                            type="number"
+                            min="1"
+                            max="<?= /* @escapeNotVerified */ $lastPageNum; ?>"
+                            size="2"
+                            value="<?= /* @escapeNotVerified */ $block->getCurrentPage(); ?>"
+                            data-url-pattern='<?= /* @escapeNotVerified */ $block->escapeHtml($this->getUrlPattern()); ?>'
+                        >
+
+                        <label class="label cs-pagination__page-provider-label">
+                            <?php if($lastPageSeparator):
+                                echo $lastPageSeparator; ?>
+                            <?php endif; ?> <?= /* @escapeNotVerified */ $lastPageNum; ?>
+                        </label>
+                    </div>
+
+                <?php else: ?>
+
+                    <ul class="items pages-items cs-pagination__items" role="none">
+                        <?php if ($block->canShowFirst()): ?>
+                            <li class="item cs-pagination__item cs-pagination__item--first-page" role="none">
+                                <a class="page first cs-pagination__number cs-pagination__number--first-page" href="<?= /* @escapeNotVerified */ $block->getFirstPageUrl() ?>" role="menuitem"><span>1</span></a>
+                            </li>
+                        <?php endif;?>
+
+                        <?php if ($block->canShowPreviousJump()): ?>
+                            <li class="item cs-pagination__item" role="none">
+                                <a class="page previous jump cs-pagination__number cs-pagination__number--jump" href="<?= /* @escapeNotVerified */ $block->getPreviousJumpUrl(); ?>" role="menuitem"><span>...</span></a>
+                            </li>
+                        <?php endif;?>
+
+                        <?php foreach ($block->getFramePages() as $page): ?>
+                            <?php if ($block->isPageCurrent($page)): ?>
+                                <li class="item current cs-pagination__item cs-pagination__item--current" role="none">
+                                    <span class="cs-pagination__number cs-pagination__number--current">
+                                        <span class="label cs-visually-hidden"><?= /* @escapeNotVerified */ __('You\'re currently reading page') ?> </span>
+                                        <span><?= /* @escapeNotVerified */ $page; ?></span>
+                                    </span>
+                                </li>
+                            <?php else: ?>
+                                <li class="item cs-pagination__item" role="none">
+                                    <a href="<?= /* @escapeNotVerified */ $block->getPageUrl($page); ?>" class="page cs-pagination__number" role="menuitem"><span><?= /* @escapeNotVerified */ $page; ?></span></a>
+                                </li>
+                            <?php endif;?>
+                        <?php endforeach;?>
+
+                        <?php if ($block->canShowNextJump()): ?>
+                            <li class="item cs-pagination__item" role="none">
+                                <a class="page next jump cs-pagination__number cs-pagination__number--jump" href="<?= /* @escapeNotVerified */ $block->getNextJumpUrl(); ?>" role="menuitem"><span>...</span></a>
+                            </li>
+                        <?php endif;?>
+
+                        <?php if ($block->canShowLast()): ?>
+                            <li class="item cs-pagination__item cs-pagination__item--last-page" role="none">
+                                <a class="page last cs-pagination__number cs-pagination__number--last-page" href="<?= /* @escapeNotVerified */ $block->getLastPageUrl() ?>" role="menuitem"><span><?= /* @escapeNotVerified */ $block->getLastPageNum() ?></span></a>
+                            </li>
+                        <?php endif;?>
+                    </ul>
+                <?php endif; ?>
+
+                <?php if (!$isLastPage || $isLastPage && $displayPrevNextButtonsIfDisabled): ?>
+                    <?php 
+                        $nextPageLabel = $block->getAnchorTextForNext() ?? __('Next page');
+                        $nextPageIcon = $block->getVar('toolbar/pagination/icons/next_page', 'Magento_Theme');
+                        $nextPageIcon = !empty($nextPageIcon) 
+                            ? $this->getLayout()
+                                 ->createBlock('MageSuite\ThemeHelpers\Block\Icon')
+                                 ->setIconUrl($nextPageIcon)
+                                 ->setCssClass('cs-pagination__action-icon cs-pagination__action-icon--next-page')
+                                 ->setAltText($nextPageLabel)
+                                 ->setInlined(true)
+                                 ->setLazyLoaded(true)
+                                 ->toHtml()
+                            : '';
+                        $nextActionTag = $isLastPage && $displayPrevNextButtonsIfDisabled ? 'span' : 'a';
+                    ?>
+                    <div class="item pages-item-next cs-pagination__next" role="none">
+                        <<?= $nextActionTag ?> 
+                          class="<?= /* @escapeNotVerified */ $nextPageLabel ? 'link ' : 'action ' ?> next cs-pagination__action cs-pagination__action--next-page<?= $nextActionTag != 'a' ? ' cs-pagination__action--disabled' : ''; ?>"
+                          <?php if($nextActionTag == 'a'): ?> href="<?= /* @escapeNotVerified */ $block->getNextPageUrl() ?>"<?php endif ?> 
+                          title="<?= /* @escapeNotVerified */ $nextPageLabel ?>"
+                          tabindex="0"
+                          role="menuitem">
+                            <?= $nextPageIcon ?>
+                            <?php if($displayPrevNextLabels): ?>
+                                <span class="cs-pagination__action-label cs-pagination__action-label--next-page"><?= /* @escapeNotVerified */ $nextPageLabel ?></span>
+                            <?php endif; ?>
+                        </<?= $nextActionTag ?>>
+                    </div>
+                <?php endif;?>
+            </div>
+        </div>
+    <?php endif; ?>
+
+    <?php if ($block->isShowPerPage()): ?>
+        <div class="cs-toolbar__item cs-toolbar__item--limiter">
+        <strong class="limiter-label"><?= /* @escapeNotVerified */ __('Show') ?></strong>
+            <select id="limiter" data-mage-init='{"redirectUrl": {"event":"change"}}' class="limiter-options">
+                <?php foreach ($block->getAvailableLimit() as $_key => $_limit): ?>
+                    <option value="<?= /* @escapeNotVerified */ $block->getLimitUrl($_key) ?>"<?php if ($block->isLimitCurrent($_key)): ?>
+                        selected="selected"<?php endif ?>>
+                        <?= /* @escapeNotVerified */ $_limit ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <span class="limiter-text"><?= /* @escapeNotVerified */ __('per page') ?></span>
+        </div>
+    <?php endif ?>
+<?php endif ?>

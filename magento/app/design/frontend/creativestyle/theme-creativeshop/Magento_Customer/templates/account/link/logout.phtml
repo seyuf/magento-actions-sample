@@ -1,0 +1,24 @@
+<?php
+// @codingStandardsIgnoreFile
+
+/** @var $block \Magento\Customer\Block\Account\AuthorizationLink */
+$dataPostParam = '';
+if ($block->isLoggedIn()) {
+    $dataPostParam = sprintf(" data-post='%s' data-uenc-update='true'", $block->getPostParams());
+}
+?>
+
+<?php if ($block->isLoggedIn()):?>
+    <li class="nav item">
+        <span class="delimiter"></span>
+    </li>
+    <li class="nav item">
+        <a
+            <?= /* @escapeNotVerified */ $block->getLinkAttributes(); ?>
+            <?= /* @escapeNotVerified */ $dataPostParam; ?>
+        >
+            <?= $block->escapeHtml($block->getLabel()); ?>
+            <?= $block->getChildHtml('dashboard.logout.icon'); ?>
+        </a>
+    </li>
+<?php endif;?>
