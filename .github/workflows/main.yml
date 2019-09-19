@@ -43,3 +43,4 @@ jobs:
       with: 
         php: '7.1'
         process: 'build'
+        elasticsuite: 1
