@@ -23,22 +23,8 @@ jobs:
     steps:          
     - uses: actions/checkout@master
     - name: 'launch magento2 build'
-      uses: ./
+      uses: MAD-I-T/magento-actions@master
       env:
-        ELK_HOST: elasticseach
-        ELK_PORT: ${{ job.services.elasticsearch.ports[9200] }}
-        MYSQL_HOST: mysql
-        MYSQL_PORT: ${{ job.services.mysql.ports[3306] }}
-        JOB_NETWORK: ${{job.container.network}}
-        BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
-        MYSQL_ROOT_PASSWORD: magento
-        MYSQL_DATABASE: magento
-        #USER: ${{secrets.STAGE_USER}}
-        #HOST: ${{secrets.STAGE_HOST}}
-        #HOST_DEPLOY_PATH: ${{secrets.STAGE_HOST_DEPLOY_PATH}}
-        #HOST_DEPLOY_PATH_BUCKET: ${{secrets.STAGE_HOST_DEPLOY_PATH}}/bucket
-        #SSH_PRIVATE_KEY: ${{secrets.STAGE_SSH_PRIVATE_KEY}}
-        #SSH_KEYSCAN: ${{secrets.STAGE_SSH_KEYSCAN}}
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with: 
         php: '7.1'
