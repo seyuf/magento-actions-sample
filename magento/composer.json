@@ -11,7 +11,6 @@
         "sort-packages": true
     },
     "require": {
-        "agencednd/module-pimgento-2-api": "^100.2",
         "creativestyle/magesuite": "^3.0.0",
         "creativestyle/theme-creativeshop": "^8.5",
         "cweagans/composer-patches": "^1.6",
