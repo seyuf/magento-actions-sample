@@ -39,12 +39,12 @@ jobs:
         php: '7.1'
         process: 'unit-test'
         elasticsuite: 1
-    - name: 'launch magento2 integration test'
+    - name: 'launch magento2 static test'
       if: always()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         php: '7.1'
-        process: 'integration-test'
+        process: 'static-test'
         elasticsuite: 1
