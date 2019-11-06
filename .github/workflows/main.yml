@@ -69,10 +69,7 @@ jobs:
     - uses: actions/checkout@master
     - name: "Verify MySQL connection from container"
       run: |
-          apt-get update
-          apt-get install -y mysql-client
-          mysql --host localhost -uroot -p123123q -e "SHOW DATABASES"
-
+          curl localhost:3306
     - name: 'launch magento2 integration test'
       uses: MAD-I-T/magento-actions@master
       env:
