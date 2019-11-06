@@ -27,18 +27,18 @@ jobs:
           RABBITMQ_DEFAULT_VHOST: "/"
         ports:
           - 5672:5672
-          
+
     steps:
     - uses: actions/checkout@master
     - name: 'launch magento2 integration test'
-        if: always()
-        uses: MAD-I-T/magento-actions@master
-        env:
-          COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-        with:
-          php: '7.1'
-          process: 'integration-test'
-          elasticsuite: 1
+      if: always()
+      uses: MAD-I-T/magento-actions@master
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        process: 'integration-test'
+        elasticsuite: 1
     - name: 'launch magento2 build'
       if: always()
       uses: MAD-I-T/magento-actions@master
