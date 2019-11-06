@@ -8,7 +8,7 @@ return [
     'db-host' => 'mysql',
     'db-user' => 'magento',
     'db-password' => 'magento',
-    'db-name' => 'magento_integration_tests',
+    'db-name' => 'magento',
     'db-prefix' => '',
     'backend-frontname' => 'backend',
     'admin-user' => \Magento\TestFramework\Bootstrap::ADMIN_NAME,
