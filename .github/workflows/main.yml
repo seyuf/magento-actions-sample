@@ -63,7 +63,6 @@ jobs:
           RABBITMQ_DEFAULT_USER: "guest"
           RABBITMQ_DEFAULT_PASS: "guest"
           RABBITMQ_DEFAULT_VHOST: "/"
-        hostname: "localhost"
         ports:
           - 5672:5672
     steps:
@@ -73,6 +72,7 @@ jobs:
           apt-get update
           apt-get install -y mysql-client
           mysql --host localhost -uroot -p123123q -e "SHOW DATABASES"
+
     - name: 'launch magento2 integration test'
       uses: MAD-I-T/magento-actions@master
       env:
