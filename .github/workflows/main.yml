@@ -49,6 +49,7 @@ jobs:
         env:
           MYSQL_ROOT_PASSWORD: "123123q"
           MYSQL_DATABASE: "magento_integration_tests"
+          DB_HOST: localhost
         ports:
           - 3106:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -62,12 +63,17 @@ jobs:
           RABBITMQ_DEFAULT_USER: "guest"
           RABBITMQ_DEFAULT_PASS: "guest"
           RABBITMQ_DEFAULT_VHOST: "/"
+        hostname: "localhost"
         ports:
           - 5672:5672
     steps:
     - uses: actions/checkout@master
+    - name: "Verify MySQL connection from container"
+      run: |
+          apt-get update
+          apt-get install -y mysql-client
+          mysql --host localhost -uroot -p123123q -e "SHOW DATABASES"
     - name: 'launch magento2 integration test'
-      if: always()
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
