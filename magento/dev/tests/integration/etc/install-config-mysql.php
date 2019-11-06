@@ -6,7 +6,7 @@
 
 return [
     'db-host' => 'mysql',
-    'db-user' => 'magento',
+    'db-user' => 'root',
     'db-password' => 'magento',
     'db-name' => 'magento',
     'db-prefix' => '',
