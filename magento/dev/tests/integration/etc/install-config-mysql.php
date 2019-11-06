@@ -20,4 +20,7 @@ return [
     'amqp-port' => '5672',
     'amqp-user' => 'magento',
     'amqp-password' => 'magento',
+    'es-hosts' => "elasticsearch:9200",
+    'es-user'=> "",
+    'es-pass'=> ""
 ];

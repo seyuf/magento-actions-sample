@@ -20,7 +20,4 @@ return [
     'amqp-port' => '5672',
     'amqp-user' => 'guest',
     'amqp-password' => 'guest',
-    'es-hosts' => "elasticsearch:9200"
-    'es-user'=> ""
-    'es-pass'=> ""
 ];
