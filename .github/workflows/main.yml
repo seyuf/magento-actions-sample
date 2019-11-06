@@ -52,7 +52,6 @@ jobs:
         ports:
           - 3106:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
-        network_mode: "host"
       elasticsearch:
         image: docker://madit512/magento2-elasticsearch:5.6
         ports:
@@ -65,7 +64,6 @@ jobs:
           RABBITMQ_DEFAULT_VHOST: "/"
         ports:
           - 5672:5672
-        network_mode: "host"
     steps:
     - uses: actions/checkout@master
     - name: 'launch magento2 integration test'
