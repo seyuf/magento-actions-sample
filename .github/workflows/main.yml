@@ -72,7 +72,7 @@ jobs:
       run: |
           sudo apt-get update
           sudo apt-get install -y mysql-client
-          mysql --host localhost -uroot -p123123q -e "SHOW DATABASES"
+          mysql --host localhost -uroot -p123123q magento_integration_tests
           curl localhost:5672
 
     - name: 'launch magento2 integration test'
