@@ -5,9 +5,9 @@
  */
 
 return [
-    'db-host' => 'mysql',
-    'db-user' => 'magento',
-    'db-password' => 'magento',
+    'db-host' => 'localhost',
+    'db-user' => 'root',
+    'db-password' => '123123q',
     'db-name' => 'magento_integration_tests',
     'db-prefix' => '',
     'backend-frontname' => 'backend',
@@ -16,8 +16,8 @@ return [
     'admin-email' => \Magento\TestFramework\Bootstrap::ADMIN_EMAIL,
     'admin-firstname' => \Magento\TestFramework\Bootstrap::ADMIN_FIRSTNAME,
     'admin-lastname' => \Magento\TestFramework\Bootstrap::ADMIN_LASTNAME,
-    'amqp-host' => 'rabbitmq',
+    'amqp-host' => 'localhost',
     'amqp-port' => '5672',
-    'amqp-user' => 'magento',
-    'amqp-password' => 'magento',
+    'amqp-user' => 'guest',
+    'amqp-password' => 'guest',
 ];
