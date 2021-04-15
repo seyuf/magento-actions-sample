@@ -15,3 +15,4 @@ Because a habit to follow https://12factor.net composer credentials should be se
 2. Create variable `COMPOSER_AUTH`
 3. Add you composer auth as value e.g :
    `{"http-basic":{"repo.magento.com": {"username": "xxxxxxxxxxxxxx", "password": "xxxxxxxxxxxxxx"}}}`
+   
