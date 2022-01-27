@@ -48,9 +48,10 @@ jobs:
       with:
         php: '7.1'
         process: 'security-scan-modules'
+        elasticsearch: 1
     - name: 'launch magento2 unit test'
       if: always()
-      uses: MAD-I-T/magento-actions@v2.0
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -64,6 +65,7 @@ jobs:
       with:
         php: '7.1'
         process: 'static-test'
+        elasticsearch: 1
     - name: 'phpcs testing'
       if: always()
       uses: MAD-I-T/magento-actions@v2.0
