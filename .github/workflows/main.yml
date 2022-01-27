@@ -57,6 +57,9 @@ jobs:
       with:
         php: '7.1'
         process: 'unit-test'
+        elasticsearch: 0
+        elasticsuite: 0
+
     - name: 'launch magento2 static test'
       if: always()
       uses: MAD-I-T/magento-actions@v2.0
