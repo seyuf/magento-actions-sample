@@ -65,8 +65,6 @@ jobs:
       with:
         php: '7.1'
         process: 'static-test'
-        elasticsuite: 1
-
     - name: 'phpcs testing'
       if: always()
       uses: MAD-I-T/magento-actions@master
