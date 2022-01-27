@@ -48,7 +48,6 @@ jobs:
       with:
         php: '7.2'
         process: 'security-scan-modules'
-        elasticsearch: 1
     - name: 'launch magento2 unit test'
       if: always()
       uses: MAD-I-T/magento-actions@v2.0
