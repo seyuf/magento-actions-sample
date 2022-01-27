@@ -46,7 +46,7 @@ jobs:
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.1'
+        php: '7.2'
         process: 'security-scan-modules'
         elasticsearch: 1
     - name: 'launch magento2 unit test'
@@ -57,6 +57,7 @@ jobs:
       with:
         php: '7.1'
         process: 'unit-test'
+        elasticsearch: 1
     - name: 'launch magento2 static test'
       if: always()
       uses: MAD-I-T/magento-actions@v2.0
@@ -65,15 +66,15 @@ jobs:
       with:
         php: '7.1'
         process: 'static-test'
-        elasticsearch: 1
+        elasticsuite: 1
+
     - name: 'phpcs testing'
       if: always()
-      uses: MAD-I-T/magento-actions@v2.0
+      uses: MAD-I-T/magento-actions@3.7
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         php: '7.1'
-        override_settings: 1
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
         standard: 'Magento2'
