@@ -29,7 +29,59 @@ jobs:
           - 5672:5672
 
     steps:
-    - uses: actions/checkout@master
+    - name: 'launch security scanner files'
+      if: ${{true}}
+      continue-on-error: true
+      uses: MAD-I-T/magento-actions@v2.0
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        process: 'security-scan-files'
+        elasticsearch: 1
+        override_settings: 1
+    - name: 'launch security scanner modules'
+      if: ${{true}}
+      continue-on-error: true
+      uses: MAD-I-T/magento-actions@v2.0
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        process: 'security-scan-modules'
+        elasticsearch: 1
+    - name: 'launch magento2 unit test'
+      if: ${{true}}
+      continue-on-error: true
+      uses: MAD-I-T/magento-actions@v2.0
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        process: 'unit-test'
+        elasticsearch: 1
+    - name: 'launch magento2 static test'
+      if: ${{true}}
+      continue-on-error: true
+      uses: MAD-I-T/magento-actions@v2.0
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        process: 'static-test'
+        elasticsearch: 1
+    - name: 'phpcs testing'
+      if: ${{true}}
+      continue-on-error: true
+      uses: MAD-I-T/magento-actions@v2.0
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        php: '7.1'
+        override_settings: 1
+        process: 'phpcs-test'
+        extension: 'Magento/CatalogSearch'
+        standard: 'Magento2'
     - name: 'launch magento2 build'
       if: always()
       uses: MAD-I-T/magento-actions@v2.0
@@ -40,6 +92,7 @@ jobs:
         process: 'build'
         elasticsuite: 1
     - name: 'launch magento2 integration test'
+      if: ${{false}}
       uses: MAD-I-T/magento-actions@v2.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
