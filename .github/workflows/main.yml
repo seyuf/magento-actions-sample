@@ -29,6 +29,9 @@ jobs:
           - 5672:5672
 
     steps:
+    - uses: actions/checkout@v1
+      with:
+        submodules: recursive
     - name: 'launch security scanner files'
       if: ${{true}}
       continue-on-error: true
