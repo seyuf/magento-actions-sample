@@ -70,7 +70,7 @@ jobs:
 
     - name: 'phpcs testing'
       if: always()
-      uses: MAD-I-T/magento-actions@3.7
+      uses: MAD-I-T/magento-actions@v3.7
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
