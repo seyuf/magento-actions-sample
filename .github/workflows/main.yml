@@ -1,98 +1,88 @@
+
 name: m2-actions-test
 
 on: [push]
 
 jobs:
   magento2-build:
-    runs-on: ubuntu-18.04
-    name: 'build m2'
+    runs-on: ubuntu-latest
+    name: 'm2 tests & build'
     services:
       mysql:
-        image: docker://mysql:5.7
+        image: docker://mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: magento
           MYSQL_DATABASE: magento
         ports:
-          - 3106:3306
+          - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       elasticsearch:
-        image: docker://madit512/magento2-elasticsearch:5.6
+        image: docker://elasticsearch:7.1.0
         ports:
           - 9200:9200
-      rabbitmq:
-        image: docker://rabbitmq:3.6.6-alpine
-        env:
-          RABBITMQ_DEFAULT_USER: "magento"
-          RABBITMQ_DEFAULT_PASS: "magento"
-          RABBITMQ_DEFAULT_VHOST: "/"
-        ports:
-          - 5672:5672
-
+        options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-    - uses: actions/checkout@v1
-      with:
-        submodules: recursive
-    - name: 'launch security scanner files'
-      if: always()
-      uses: MAD-I-T/magento-actions@v2.0
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        php: '7.1'
-        process: 'security-scan-files'
-    - name: 'launch security scanner modules'
-      if: always()
-      uses: MAD-I-T/magento-actions@v2.0
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        php: '7.2'
-        process: 'security-scan-modules'
-    - name: 'launch magento2 unit test'
-      if: always()
-      uses: MAD-I-T/magento-actions@v2.0
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        php: '7.1'
-        process: 'unit-test'
-        elasticsuite: 1
-
-    - name: 'launch magento2 static test'
-      if: always()
-      uses: MAD-I-T/magento-actions@v2.0
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        php: '7.1'
-        process: 'static-test'
-        elasticsuite: 1
-
-    - name: 'phpcs testing'
-      if: always()
+    - uses: actions/checkout@v2
+    - name: 'install fresh magento repo'
+      if: ${{true}}
       uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.2'
+        process: 'create-project'
+        magento_version: 2.4.4
+        #no_push: 1     
+    - name: 'launch security scanner files'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'security-scan-files'
+        elasticsearch: 1
+    - name: 'launch security scanner modules'
+      if: always()
+      uses: MAD-I-T/magento-actions@3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'security-scan-modules'
+        elasticsearch: 1
+    - name: 'launch magento2 unit test'
+      if: always()
+      uses: MAD-I-T/magento-actions@3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'unit-test'
+        elasticsearch: 1
+    - name: 'launch magento2 static test'
+      if: always()
+      uses: MAD-I-T/magento-actions@3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'static-test'
+        elasticsearch: 1
+    - name: 'phpcs testing'
+      if: always()
+      uses: MAD-I-T/magento-actions@3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
         process: 'phpcs-test'
         extension: 'Magento/CatalogSearch'
+        severity: 10
         standard: 'Magento2'
+        elasticsearch: 1
     - name: 'launch magento2 build'
       if: always()
-      uses: MAD-I-T/magento-actions@v2.0
+      id: build
+      uses: MAD-I-T/magento-actions@3.9
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
-        php: '7.1'
         process: 'build'
-        elasticsuite: 1
-    - name: 'launch magento2 integration test'
-      if: ${{false}}
-      uses: MAD-I-T/magento-actions@v2.0
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        php: '7.1'
-        process: 'integration-test'
-        elasticsuite: 1
+        elasticsearch: 1
+
+  
