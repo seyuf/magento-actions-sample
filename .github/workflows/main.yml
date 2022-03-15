@@ -23,22 +23,6 @@ jobs:
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
     - uses: actions/checkout@v2  
-    - name: 'launch security scanner files'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.9
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        process: 'security-scan-files'
-        elasticsearch: 1
-    - name: 'launch security scanner modules'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.9
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        process: 'security-scan-modules'
-        elasticsearch: 1
     - name: 'launch magento2 unit test'
       if: always()
       uses: MAD-I-T/magento-actions@v3.9
@@ -74,6 +58,22 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'build'
+        elasticsearch: 1
+    - name: 'launch security scanner files'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'security-scan-files'
+        elasticsearch: 1
+    - name: 'launch security scanner modules'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'security-scan-modules'
         elasticsearch: 1
     - name: 'install fresh magento repo'
       if: ${{true}}
