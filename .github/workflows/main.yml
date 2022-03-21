@@ -49,7 +49,6 @@ jobs:
         extension: 'Magento/CatalogSearch'
         severity: 10
         standard: 'Magento2'
-        elasticsearch: 1
     - name: 'launch magento2 build'
       if: always()
       id: build
