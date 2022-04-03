@@ -25,7 +25,7 @@ jobs:
     - uses: actions/checkout@v2  
     - name: 'launch magento2 unit test'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.9
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -33,7 +33,7 @@ jobs:
         elasticsearch: 1
     - name: 'launch magento2 static test'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.9
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -41,7 +41,7 @@ jobs:
         elasticsearch: 1
     - name: 'phpcs testing'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.9
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -52,7 +52,7 @@ jobs:
     - name: 'launch magento2 build'
       if: always()
       id: build
-      uses: MAD-I-T/magento-actions@v3.9
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -60,7 +60,7 @@ jobs:
         elasticsearch: 1
     - name: 'launch security scanner files'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.9
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -68,7 +68,7 @@ jobs:
         elasticsearch: 1
     - name: 'launch security scanner modules'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.9
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
