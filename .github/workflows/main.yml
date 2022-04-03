@@ -22,16 +22,7 @@ jobs:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-    - uses: actions/checkout@v2
-    - name: 'launch magento2 build'
-      if: always()
-      id: build
-      uses: MAD-I-T/magento-actions@v3.9
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        process: 'build'
-        elasticsearch: 1  
+    - uses: actions/checkout@v2  
     - name: 'launch magento2 unit test'
       if: always()
       uses: MAD-I-T/magento-actions@v3.9
@@ -58,6 +49,15 @@ jobs:
         extension: 'Magento/CatalogSearch'
         severity: 10
         standard: 'Magento2'
+    - name: 'launch magento2 build'
+      if: always()
+      id: build
+      uses: MAD-I-T/magento-actions@v3.9
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'build'
+        elasticsearch: 1
     - name: 'launch security scanner files'
       if: always()
       uses: MAD-I-T/magento-actions@v3.9
