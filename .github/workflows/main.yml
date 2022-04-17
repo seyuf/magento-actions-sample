@@ -67,14 +67,14 @@ jobs:
         elasticsearch: 1
         
         
-    - name: 'phpcs testing'
+    - name: 'magento coding standard checker'
       if: always()
       uses: MAD-I-T/magento-actions@v3.10
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'phpcs-test'
-        extension: 'vendor/magento/module-email'
+        extension: 'magento/vendor/magento/module-email' # can be a custom value module in app/code/ dir e.g: Madit/Atos 
         severity: 10
         standard: 'Magento2'
         
