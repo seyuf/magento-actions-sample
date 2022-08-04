@@ -53,7 +53,7 @@ jobs:
         elasticsearch: 1
 
         
-    - name: 'launch magento2 unit test'
+    - name: 'launch magento2 unit test specific module i.e module-email'
       if: always()
       uses: MAD-I-T/magento-actions@master
       env:
