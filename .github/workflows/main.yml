@@ -25,20 +25,27 @@ jobs:
     - uses: actions/checkout@v2  
     
             
-    #comment this step if the magento dir has already been initialized    
     - name: 'install fresh magento repo'
       if: ${{true}}
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'create-project'
         magento_version: 2.4.4
         #no_push: 1   ## add this arg to not push to the repo ideal for quick test on specific version
+        
+        
+    - name: 'install fresh pwa-studio project'
+      if: ${{false}}
+      uses: MAD-I-T/magento-actions@master
+      with:
+        process: 'pwa-studio-install'
+        #no_push: 1
     
     - name: 'launch magento2 unit test'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -59,7 +66,7 @@ jobs:
 
     - name: 'launch magento2 static test'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -69,7 +76,7 @@ jobs:
         
     - name: 'magento coding standard checker'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -82,7 +89,7 @@ jobs:
     - name: 'launch magento2 build'
       if: always()
       id: build
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -92,7 +99,7 @@ jobs:
         
     - name: 'launch security scanner files'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -102,7 +109,7 @@ jobs:
         
     - name: 'launch security scanner modules'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -112,7 +119,7 @@ jobs:
    #### section to be activated, for zero downtime deployment on preprod and/or prod remove ${{false}}
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} #  if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -129,7 +136,7 @@ jobs:
         
     - name: 'unlock deployer if fails'
       if: ${{false}} # if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -146,7 +153,7 @@ jobs:
         
     - name: 'start zero downtime deploy on production'
       if: ${{false}} # if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -163,7 +170,7 @@ jobs:
         
     - name: 'unlock php deployer if the deployment fails on production'
       if: ${{false}} #if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@v3.10
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
