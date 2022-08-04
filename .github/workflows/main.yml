@@ -41,7 +41,7 @@ jobs:
       uses: MAD-I-T/magento-actions@master
       with:
         process: 'pwa-studio-install'
-        #no_push: 1
+        no_push: 1
     
     - name: 'launch magento2 unit test'
       if: always()
