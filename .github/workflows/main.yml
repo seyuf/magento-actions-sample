@@ -37,7 +37,7 @@ jobs:
         
         
     - name: 'install fresh pwa-studio project'
-      #if: ${{false}}
+      if: ${{false}}
       uses: MAD-I-T/magento-actions@master
       with:
         process: 'pwa-studio-install'
