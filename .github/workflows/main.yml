@@ -17,7 +17,7 @@ jobs:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
       elasticsearch:
-        image: docker://elasticsearch:7.1.0
+        image: docker://elasticsearch:7.17
         ports:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
@@ -27,25 +27,25 @@ jobs:
             
     - name: 'install fresh magento repo'
       if: ${{false}}
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'create-project'
-        magento_version: 2.4.4
+        magento_version: 2.4.5
         no_push: 1   ## add this arg to not push to the repo ideal for quick test on specific version
         
         
     - name: 'install fresh pwa-studio project'
       if: ${{false}}
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       with:
         process: 'pwa-studio-install'
         no_push: 1
     
     - name: 'launch magento2 unit test'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -55,7 +55,7 @@ jobs:
         
     - name: 'launch magento2 unit test specific module i.e module-email'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -66,7 +66,7 @@ jobs:
 
     - name: 'launch magento2 static test'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -76,7 +76,7 @@ jobs:
         
     - name: 'magento coding standard checker'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -89,7 +89,7 @@ jobs:
     - name: 'launch magento2 build'
       if: always()
       id: build
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -99,7 +99,7 @@ jobs:
         
     - name: 'launch security scanner files'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -109,7 +109,7 @@ jobs:
         
     - name: 'launch security scanner modules'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
