@@ -26,7 +26,7 @@ jobs:
     
             
     - name: 'install fresh magento repo'
-      if: ${{false}}
+      #if: ${{false}}
       uses: MAD-I-T/magento-actions@v3.14
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
