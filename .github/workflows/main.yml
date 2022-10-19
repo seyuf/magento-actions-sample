@@ -27,7 +27,7 @@ jobs:
             
     - name: 'install fresh magento repo'
       #if: ${{false}}
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -38,14 +38,14 @@ jobs:
         
     - name: 'install fresh pwa-studio project'
       #if: ${{false}}
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       with:
         process: 'pwa-studio-install'
         #no_push: 1
     
     - name: 'launch magento2 unit test'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -55,7 +55,7 @@ jobs:
         
     - name: 'launch magento2 unit test specific module i.e module-email'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -66,7 +66,7 @@ jobs:
 
     - name: 'launch magento2 static test'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -76,7 +76,7 @@ jobs:
         
     - name: 'magento coding standard checker'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -89,7 +89,7 @@ jobs:
     - name: 'launch magento2 build'
       if: always()
       id: build
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -99,7 +99,7 @@ jobs:
         
     - name: 'launch security scanner files'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -109,7 +109,7 @@ jobs:
         
     - name: 'launch security scanner modules'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.14
+      uses: MAD-I-T/magento-actions@v3.15
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
