@@ -52,6 +52,16 @@ jobs:
         process: 'unit-test'
         elasticsearch: 1
 
+    - name: 'launch magento2 unit test filtered by testsuite'
+      if: always()
+      uses: MAD-I-T/magento-actions@master
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'unit-test'
+        testsuite: 'Magento_Unit_Tests_Other'
+        elasticsearch: 1
+
         
     - name: 'launch magento2 unit test specific module i.e module-email'
       if: always()
