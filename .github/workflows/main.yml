@@ -22,8 +22,7 @@ jobs:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
-    - uses: actions/checkout@v3
-    
+    - uses: actions/checkout@v3  
             
     - name: 'install fresh magento repo'
       #if: ${{false}}
@@ -126,6 +125,21 @@ jobs:
         process: 'security-scan-modules'
         elasticsearch: 1
 
+    - name: 'mess detector'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.19
+      with:
+        process: 'mess-detector'
+        md_src_path: 'vendor/magento/module-email'
+
+    - name: 'phpstan'
+      if: always()
+      uses: MAD-I-T/magento-actions@v3.19
+      with:
+        process: 'phpstan'
+        exec_path: 'vendor/magento/module-email'
+
+
    #### section to be activated, for zero downtime deployment on preprod and/or prod remove ${{false}}
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} #  if: steps.build.outcome == 'success'
@@ -220,6 +234,7 @@ jobs:
           - 5672:5672
 
     steps:
+      - uses: actions/checkout@v3  
       - name: 'install fresh magento repo'
         #if: always()
         if: ${{true}}
