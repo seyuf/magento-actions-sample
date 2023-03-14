@@ -26,13 +26,13 @@ jobs:
             
     - name: 'install fresh magento repo'
       #if: ${{false}}
-      uses: MAD-I-T/magento-actions@v3.18
+      uses: MAD-I-T/magento-actions@v3.19
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'create-project'
-        magento_version: 2.4.5-p1
-        no_push: 1   ## add this arg to not push to the repo ideal for quick test on specific version
+        magento_version: 2.4.6
+        no_push: 0   ## add this arg to not push to the repo ideal for quick test on specific version
         
         
     - name: 'install fresh pwa-studio project'
@@ -40,7 +40,7 @@ jobs:
       uses: MAD-I-T/magento-actions@master
       with:
         process: 'pwa-studio-install'
-        no_push: 1
+        no_push: 0
     
     - name: 'launch magento2 unit test'
       if: always()
