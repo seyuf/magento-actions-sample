@@ -21,12 +21,17 @@ jobs:
         ports:
           - 9200:9200
         options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+      opensearch:
+        image: ghcr.io/mad-i-t/magento-opensearch:2.5.0
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" -e "plugins.security.disabled=true" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
     steps:
     - uses: actions/checkout@v3  
             
     - name: 'install fresh magento repo'
       #if: ${{false}}
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -37,14 +42,14 @@ jobs:
         
     - name: 'install fresh pwa-studio project'
       #if: ${{false}}
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       with:
         process: 'pwa-studio-install'
         no_push: 0
     
     - name: 'launch magento2 unit test'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -53,7 +58,7 @@ jobs:
 
     - name: 'launch magento2 unit test filtered by testsuite'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -64,7 +69,7 @@ jobs:
         
     - name: 'launch magento2 unit test specific module i.e module-email'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -75,7 +80,7 @@ jobs:
 
     - name: 'launch magento2 static test'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -85,7 +90,7 @@ jobs:
         
     - name: 'magento coding standard checker'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -98,7 +103,7 @@ jobs:
     - name: 'launch magento2 build'
       if: always()
       id: build
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -108,7 +113,7 @@ jobs:
         
     - name: 'launch security scanner files'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -118,7 +123,7 @@ jobs:
         
     - name: 'launch security scanner modules'
       if: always()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -127,14 +132,14 @@ jobs:
 
     - name: 'mess detector'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       with:
         process: 'mess-detector'
         md_src_path: 'vendor/magento/module-email'
 
     - name: 'phpstan'
       if: always()
-      uses: MAD-I-T/magento-actions@v3.19
+      uses: MAD-I-T/magento-actions@v3.20
       with:
         process: 'phpstan'
         exec_path: 'vendor/magento/module-email'
@@ -143,7 +148,7 @@ jobs:
    #### section to be activated, for zero downtime deployment on preprod and/or prod remove ${{false}}
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} #  if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -160,7 +165,7 @@ jobs:
         
     - name: 'unlock deployer if fails'
       if: ${{false}} # if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -177,7 +182,7 @@ jobs:
         
     - name: 'start zero downtime deploy on production'
       if: ${{false}} # if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -194,7 +199,7 @@ jobs:
         
     - name: 'unlock php deployer if the deployment fails on production'
       if: ${{false}} #if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v3.20
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -232,13 +237,18 @@ jobs:
           RABBITMQ_DEFAULT_VHOST: "/"
         ports:
           - 5672:5672
+      opensearch:
+        image: ghcr.io/mad-i-t/magento-opensearch:2.5.0
+        ports:
+          - 9200:9200
+        options: -e="discovery.type=single-node" -e "plugins.security.disabled=true" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
 
     steps:
       - uses: actions/checkout@v3  
       - name: 'install fresh magento repo'
         #if: always()
         if: ${{true}}
-        uses: MAD-I-T/magento-actions@v3.18
+        uses: MAD-I-T/magento-actions@v3.20
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -248,7 +258,7 @@ jobs:
 
       - name: 'launch magento2 integration test custom testsuite'
         if: ${{true}}
-        uses: MAD-I-T/magento-actions@v3.18
+        uses: MAD-I-T/magento-actions@v3.20
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -258,7 +268,7 @@ jobs:
       
       - name: 'integration test class'
         if: ${{true}}
-        uses: MAD-I-T/magento-actions@v3.18
+        uses: MAD-I-T/magento-actions@v3.20
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -268,7 +278,7 @@ jobs:
 
       - name: 'integration test class filter'
         if: ${{true}}
-        uses: MAD-I-T/magento-actions@v3.18
+        uses: MAD-I-T/magento-actions@v3.20
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
