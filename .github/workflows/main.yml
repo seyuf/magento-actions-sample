@@ -75,6 +75,8 @@ jobs:
       with:
         process: 'unit-test'
         unit_test_subset_path: 'vendor/magento/module-email/Test/Unit'
+        php: 8.1
+        composer_version: 2
 
 
     - name: 'launch magento2 static test'
