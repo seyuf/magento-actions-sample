@@ -56,7 +56,6 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'unit-test'
-        elasticsearch: 1
 
     - name: 'launch magento2 unit test filtered by testsuite'
       if: always()
@@ -66,7 +65,6 @@ jobs:
       with:
         process: 'unit-test'
         testsuite: 'Magento_Unit_Tests_Other'
-        elasticsearch: 1
 
         
     - name: 'launch magento2 unit test specific module i.e module-email'
@@ -76,7 +74,6 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'unit-test'
-        elasticsearch: 1
         unit_test_subset_path: 'vendor/magento/module-email/Test/Unit'
 
 
@@ -87,7 +84,6 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'static-test'
-        elasticsearch: 1
         
         
     - name: 'magento coding standard checker'
@@ -110,7 +106,6 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'build'
-        elasticsearch: 1
         
         
     - name: 'launch security scanner files'
@@ -120,7 +115,6 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'security-scan-files'
-        elasticsearch: 1
         
         
     - name: 'launch security scanner modules'
@@ -130,7 +124,6 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'security-scan-modules'
-        elasticsearch: 1
 
     - name: 'mess detector'
       if: always()
@@ -265,7 +258,6 @@ jobs:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
           process: 'integration-test'
-          elasticsearch: 1
           testsuite: "Memory Usage Tests"
       
       - name: 'integration test class'
@@ -275,7 +267,6 @@ jobs:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
           process: 'integration-test'
-          elasticsearch: 1
           integration_class: "./testsuite/Magento/MemoryUsageTest.php"
 
       - name: 'integration test class filter'
@@ -285,7 +276,6 @@ jobs:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
           process: 'integration-test'
-          elasticsearch: 1
           integration_class: "./testsuite/Magento/MemoryUsageTest.php"
           integration_filter: "testAppReinitializationNoMemoryLeak"
 
