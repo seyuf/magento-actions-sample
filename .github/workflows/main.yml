@@ -30,6 +30,7 @@ jobs:
     - uses: actions/checkout@v3  
             
     - name: 'install fresh magento repo'
+      if: always()
       #if: ${{false}}
       uses: MAD-I-T/magento-actions@v3.20
       env:
@@ -41,6 +42,7 @@ jobs:
         
         
     - name: 'install fresh pwa-studio project'
+      if: always()
       #if: ${{false}}
       uses: MAD-I-T/magento-actions@v3.20
       with:
