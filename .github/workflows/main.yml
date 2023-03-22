@@ -22,10 +22,11 @@ jobs:
       #    - 9200:9200
       #  options: -e="discovery.type=single-node" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
       opensearch:
-        image: ghcr.io/mad-i-t/magento-opensearch:2.5.0
+        image: opensearchproject/opensearch:1.2.1
         ports:
           - 9200:9200
-        options: -e="discovery.type=single-node" -e "plugins.security.disabled=true" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+        options: -e="discovery.type=single-node" -e "plugins.security.disabled=true"  -e "plugins.security.ssl.http.enabled=false" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+      
     steps:
     - uses: actions/checkout@v3  
             
@@ -38,7 +39,7 @@ jobs:
       with:
         process: 'create-project'
         magento_version: 2.4.6
-        no_push: 0   ## add this arg to not push to the repo ideal for quick test on specific version
+        no_push: 1   ## add this arg to not push to the repo ideal for quick test on specific version
         
         
     - name: 'install fresh pwa-studio project'
