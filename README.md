@@ -12,7 +12,7 @@ The action should download and populate a dir call magento at the root of the gi
 Reminder: 
 Because a habit to follow https://12factor.net composer credentials should be set through github secret option.
 
-1. Go to `Settings>Secrets`
+1. Go to `Settings>Secrets>Repository secrets`
 2. Create variable `COMPOSER_AUTH`
 3. Add you composer auth as value e.g :
    `{"http-basic":{"repo.magento.com": {"username": "xxxxxxxxxxxxxx", "password": "xxxxxxxxxxxxxx"}}}`
