@@ -39,7 +39,7 @@ jobs:
       with:
         process: 'create-project'
         magento_version: 2.4.6
-        no_push: 1   ## add this arg to not push to the repo ideal for quick test on specific version
+        #no_push: 1   ## add this arg to not push to the repo ideal for quick test on specific version
         
         
     - name: 'install fresh pwa-studio project'
