@@ -18,7 +18,7 @@
         "ext-mcrypt": "*",
         "ext-simplexml": "*",
         "lib-libxml": "*",
-        "composer/composer": "1.0.0-alpha9",
+        "composer/composer": "2.2.23",
         "magento/magento-composer-installer": "*",
         "magento/zendframework1": "*",
         "monolog/monolog": "1.11.0",
