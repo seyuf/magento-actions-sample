@@ -30,8 +30,7 @@ jobs:
     - uses: actions/checkout@v4  
             
     - name: 'install fresh magento repo'
-      #if: always()
-      if: ${{false}}
+      if: ${{true}}
       uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
