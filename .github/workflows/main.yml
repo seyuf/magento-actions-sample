@@ -104,15 +104,6 @@ jobs:
       with:
         process: 'build'
 
-        
-    - name: 'launch security scanner modules'
-      if: steps.buildboth.outcome == 'success'
-      uses: MAD-I-T/magento-actions@v3.28
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        process: 'security-scan-modules'
-        
     - name: 'launch security scanner files'
       if: (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
@@ -121,7 +112,13 @@ jobs:
       with:
         process: 'security-scan-files'
         
-
+    - name: 'launch security scanner modules'
+      if: steps.build.outcome == 'success'
+      uses: MAD-I-T/magento-actions@v3.28
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'security-scan-modules'
 
     - name: 'mess detector'
       if: (!cancelled())
