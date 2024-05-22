@@ -112,7 +112,7 @@ jobs:
         process: 'security-scan-files'
         
     - name: 'launch security scanner modules'
-      if: steps.build.outcome == 'success'
+      if: (steps.build.outcome == 'success') && (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
