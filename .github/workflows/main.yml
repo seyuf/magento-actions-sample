@@ -36,7 +36,7 @@ jobs:
         
         
     - name: 'install fresh pwa-studio project'
-      #if: always()
+      #if: (!cancelled())
       if: ${{false}}
       uses: MAD-I-T/magento-actions@v3.28
       with:
@@ -44,7 +44,7 @@ jobs:
         no_push: 1
     
     - name: 'launch magento2 unit test'
-      if: always()
+      if: (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -52,7 +52,7 @@ jobs:
         process: 'unit-test'
 
     - name: 'launch magento2 unit test filtered by testsuite'
-      if: always()
+      if: (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -62,7 +62,7 @@ jobs:
 
         
     - name: 'launch magento2 unit test specific module i.e module-email'
-      if: always()
+      if: (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -75,8 +75,8 @@ jobs:
 
 
     - name: 'launch magento2 static test'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.28
+      if: (!cancelled())
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -84,7 +84,7 @@ jobs:
         
         
     - name: 'magento coding standard checker'
-      if: always()
+      if: (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -96,41 +96,42 @@ jobs:
         
         
     - name: 'launch magento2 build'
-      if: always()
+      if: (!cancelled())
       id: build
       uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'build'
+
         
+    - name: 'launch security scanner modules'
+      if: steps.buildboth.outcome == 'success'
+      uses: MAD-I-T/magento-actions@v3.28
+      env:
+        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
+      with:
+        process: 'security-scan-modules'
         
     - name: 'launch security scanner files'
-      if: always()
+      if: (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'security-scan-files'
         
-        
-    - name: 'launch security scanner modules'
-      if: always()
-      uses: MAD-I-T/magento-actions@v3.28
-      env:
-        COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
-      with:
-        process: 'security-scan-modules'
+
 
     - name: 'mess detector'
-      if: always()
+      if: (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
       with:
         process: 'mess-detector'
         md_src_path: 'vendor/magento/module-email'
 
     - name: 'phpstan'
-      if: always()
+      if: (!cancelled())
       uses: MAD-I-T/magento-actions@v3.28
       with:
         process: 'phpstan'
@@ -240,8 +241,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4  
       - name: 'install fresh magento repo'
-        #if: always()
-        if: ${{true}}
+        #if: (!cancelled())
+        if: ${{false}}
         uses: MAD-I-T/magento-actions@v3.28
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -251,7 +252,7 @@ jobs:
           no_push: 1
 
       - name: 'launch magento2 integration test custom testsuite'
-        if: ${{true}}
+        if: (!cancelled())
         uses: MAD-I-T/magento-actions@v3.28
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -260,7 +261,7 @@ jobs:
           testsuite: "Memory Usage Tests"
       
       - name: 'integration test class'
-        if: ${{true}}
+        if: (!cancelled())
         uses: MAD-I-T/magento-actions@v3.28
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
@@ -269,7 +270,7 @@ jobs:
           integration_class: "./testsuite/Magento/MemoryUsageTest.php"
 
       - name: 'integration test class filter'
-        if: ${{true}}
+        if: (!cancelled())
         uses: MAD-I-T/magento-actions@v3.28
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
