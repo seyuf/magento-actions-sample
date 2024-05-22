@@ -94,7 +94,6 @@ jobs:
         severity: 10
         standard: 'Magento2'
         
-        
     - name: 'launch magento2 build'
       if: (!cancelled())
       id: build
