@@ -2,8 +2,8 @@
 
 Test for [MAD-I-T/magento-actions@master](https://github.com/MAD-I-T/magento-actions)
 
-Source files: Latest magento 2.4.6
-When using versions under 2.4.6, please uncomment elasticsearch service and comment opensearch one in the main.yml.
+Source files: Latest magento 2.4.8
+When using versions under 2.4.8, please uncomment elasticsearch service and comment opensearch one in the main.yml.
 
 Check `.github/workflow/main.yml` for usage example.
 The action should download and populate a dir call magento at the root of the github repo and test the src code against basic magento tasks such as unit testing, coding standard checking, build, etc... 
