@@ -40,12 +40,22 @@ bash /opt/config/utils/pagebuilder-compatibility-checker.sh
 bash /opt/config/utils/common-magento-installer.sh
 source /etc/environment
 
+# copy allure config if m2 >= 2.4.6
+if [ "$INPUT_OPENSEARCH" = "1" ]
+then
+  echo "copying allure config from $PROJECT_PATH/magento/dev/tests/unit/allure/"
+  ALLURE_PATH="$PROJECT_PATH/magento/dev/tests/unit/allure"
+  cp -r $ALLURE_PATH .
+fi
 
 if [ -n "$INPUT_UNIT_TEST_SUBSET_PATH" ]
 then
   ./vendor/bin/phpunit -c $INPUT_UNIT_TEST_CONFIG "$INPUT_UNIT_TEST_SUBSET_PATH"
-else
+elif [ -n "$INPUT_TESTSUITE" ]
+then
   ./vendor/bin/phpunit -c $INPUT_UNIT_TEST_CONFIG ${INPUT_TESTSUITE:+'--testsuite'} ${INPUT_TESTSUITE:+"$INPUT_TESTSUITE"}
+else
+  bin/magento dev:test:run unit
 fi
 
 
