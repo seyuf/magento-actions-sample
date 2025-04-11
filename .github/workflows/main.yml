@@ -50,6 +50,7 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'unit-test'
+        override_settings: 1
 
     - name: 'launch magento2 unit test filtered by testsuite'
       if: (!cancelled())
