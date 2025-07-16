@@ -45,7 +45,7 @@ jobs:
     
     - name: 'launch magento2 unit test'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@v3.33
+      uses: MAD-I-T/magento-actions@master
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
