@@ -45,12 +45,12 @@ jobs:
     
     - name: 'launch magento2 unit test'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@v3.32
+      uses: MAD-I-T/magento-actions@v3.33
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'unit-test'
-        override_settings: 1
+        #override_settings: 1
 
     - name: 'launch magento2 unit test filtered by testsuite'
       if: (!cancelled())
