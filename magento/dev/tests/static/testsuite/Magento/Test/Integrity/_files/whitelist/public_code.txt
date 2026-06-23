@@ -1,2 +1,0 @@
-Magento\LoginAsCustomerAssistance\Block\Adminhtml\NotAllowedPopup
-Magento\PageBuilder\Block\Adminhtml\Stage\Render
