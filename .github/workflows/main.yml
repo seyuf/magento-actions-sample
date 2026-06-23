@@ -1,25 +1,40 @@
+
 name: m2-actions-test
-
 on: [push]
-
 jobs:
   magento2-build:
     runs-on: ubuntu-latest
-    name: 'm2 tests & build'
     services:
       mysql:
-        image: docker://mysql:8.0
+        image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: magento
           MYSQL_DATABASE: magento
+          MYSQL_USER: magento
+          MYSQL_PASSWORD: magento
         ports:
           - 3306:3306
-        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+        options: >-
+          --health-cmd="mysqladmin ping -h localhost -pmagento"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=20
+
       opensearch:
-        image: opensearchproject/opensearch:1.2.1
+        image: opensearchproject/opensearch:2.5.0
+        env:
+          discovery.type: single-node
+          plugins.security.disabled: "true"
+          OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+          #OPENSEARCH_INITIAL_ADMIN_PASSWORD: "123Opensearch314-!"
         ports:
           - 9200:9200
-        options: -e="discovery.type=single-node" -e "plugins.security.disabled=true"  -e "plugins.security.ssl.http.enabled=false" --health-cmd="curl http://localhost:9200/_cluster/health" --health-interval=10s --health-timeout=5s --health-retries=10
+        options: >-
+          --health-cmd="curl -fs http://localhost:9200/_cluster/health || exit 1"
+          --health-interval=15s
+          --health-timeout=10s
+          --health-retries=30
+
       
     steps:
     - uses: actions/checkout@v4  
@@ -31,7 +46,7 @@ jobs:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
         process: 'create-project'
-        magento_version: 2.4.8
+        magento_version: 2.4.9
         #no_push: 1   ## add this arg to not push to the repo ideal for quick test on specific version
         
         
