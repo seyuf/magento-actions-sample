@@ -41,7 +41,7 @@ jobs:
             
     - name: 'install fresh magento repo'
       if: ${{true}}
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -53,14 +53,14 @@ jobs:
     - name: 'install fresh pwa-studio project'
       #if: (!cancelled())
       if: ${{false}}
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       with:
         process: 'pwa-studio-install'
         no_push: 1
     
     - name: 'launch magento2 unit test'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -69,7 +69,7 @@ jobs:
 
     - name: 'launch magento2 unit test filtered by testsuite'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -79,7 +79,7 @@ jobs:
         
     - name: 'launch magento2 unit test specific module i.e module-email'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -92,7 +92,7 @@ jobs:
 
     - name: 'launch magento2 static test'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -101,7 +101,7 @@ jobs:
         
     - name: 'magento coding standard checker'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -113,7 +113,7 @@ jobs:
     - name: 'launch magento2 build'
       if: (!cancelled())
       id: build
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -121,7 +121,7 @@ jobs:
 
     - name: 'launch security scanner files'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -129,7 +129,7 @@ jobs:
         
     - name: 'launch security scanner modules'
       if: (steps.build.outcome == 'success') && (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
       with:
@@ -137,14 +137,14 @@ jobs:
 
     - name: 'mess detector'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       with:
         process: 'mess-detector'
         md_src_path: 'vendor/magento/module-email'
 
     - name: 'phpstan'
       if: (!cancelled())
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       with:
         process: 'phpstan'
         exec_path: 'vendor/magento/module-email'
@@ -153,7 +153,7 @@ jobs:
    #### section to be activated, for zero downtime deployment on preprod and/or prod remove ${{false}}
     - name: 'launch magento2 zero downtime deploy with no permission check'
       if: ${{false}} #  if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -170,7 +170,7 @@ jobs:
         
     - name: 'unlock deployer if fails'
       if: ${{false}} # if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -187,7 +187,7 @@ jobs:
         
     - name: 'start zero downtime deploy on production'
       if: ${{false}} # if: steps.build.outcome == 'success'
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -204,7 +204,7 @@ jobs:
         
     - name: 'unlock php deployer if the deployment fails on production'
       if: ${{false}} #if: failure() || cancelled()
-      uses: MAD-I-T/magento-actions@master
+      uses: MAD-I-T/magento-actions@v4.0
       env:
         COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         BUCKET_COMMIT: bucket-commit-${{github.sha}}.tar.gz
@@ -255,7 +255,7 @@ jobs:
       - name: 'install fresh magento repo'
         #if: (!cancelled())
         if: ${{false}}
-        uses: MAD-I-T/magento-actions@master
+        uses: MAD-I-T/magento-actions@v4.0
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -265,7 +265,7 @@ jobs:
 
       - name: 'launch magento2 integration test custom testsuite'
         if: (!cancelled())
-        uses: MAD-I-T/magento-actions@master
+        uses: MAD-I-T/magento-actions@v4.0
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -274,7 +274,7 @@ jobs:
       
       - name: 'integration test class'
         if: (!cancelled())
-        uses: MAD-I-T/magento-actions@master
+        uses: MAD-I-T/magento-actions@v4.0
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
@@ -283,7 +283,7 @@ jobs:
 
       - name: 'integration test class filter'
         if: (!cancelled())
-        uses: MAD-I-T/magento-actions@master
+        uses: MAD-I-T/magento-actions@v4.0
         env:
           COMPOSER_AUTH: ${{secrets.COMPOSER_AUTH}}
         with:
